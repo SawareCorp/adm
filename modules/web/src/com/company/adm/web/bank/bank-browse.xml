@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.bank.BankBrowse"
+        focusComponent="banksTable"
+        lookupComponent="banksTable"
+        messagesPack="com.company.adm.web.bank">
+    <dsContext>
+        <groupDatasource id="banksDs"
+                         class="com.company.adm.entity.Bank"
+                         view="bank-view">
+            <query>
+                <![CDATA[select e from adm$Bank e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="banksTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="banksTable"
+                datasource="banksDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="banksTable"
+                    multiselect="true"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="address"/>
+            </columns>
+            <rows datasource="banksDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="banksTable.create"/>
+                <button id="editBtn"
+                        action="banksTable.edit"/>
+                <button id="removeBtn"
+                        action="banksTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

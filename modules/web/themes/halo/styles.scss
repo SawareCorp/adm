@@ -1,0 +1,11 @@
+@import "halo-defaults";
+@import "com.company.adm/halo-ext-defaults";
+@import "app-components";
+@import "com.company.adm/halo-ext";
+
+.halo {
+  // include auto-generated app components SCSS
+  @include app_components;
+  
+  @include com_company_adm-halo-ext;
+}

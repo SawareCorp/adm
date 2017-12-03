@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.suitablebank.SuitableBankEdit"
+        datasource="suitableBankDs"
+        focusComponent="suitableBankFieldGroup"
+        messagesPack="com.company.adm.web.suitablebank">
+    <dsContext>
+        <datasource id="suitableBankDs"
+                    class="com.company.adm.entity.contracts.analytics.SuitableBank"
+                    view="suitableBank-view">
+            <datasource id="bankDs"
+                        property="bank"/>
+        </datasource>
+        <collectionDatasource id="banksDs"
+                              class="com.company.adm.entity.Bank"
+                              view="bank-view">
+            <query>
+                <![CDATA[select e from adm$Bank e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="allDocumentsDs"
+                              class="com.company.adm.entity.contracts.analytics.Document"
+                              view="_local">
+            <query>
+                <![CDATA[select e from adm$Document e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="statesDs"
+                              class="com.company.adm.entity.contracts.analytics.SuitableBankState"
+                              view="_local">
+            <query>
+                <![CDATA[select s from adm$SuitableBankState s order by s.position]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="650"
+                width="500"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <fieldGroup id="suitableBankFieldGroup"
+                    datasource="suitableBankDs">
+            <column width="250px">
+                <field optionsDatasource="banksDs"
+                       property="bank"/>
+                <field optionsDatasource="statesDs"
+                       property="state"/>
+                <field property="maxAmount"/>
+                <field property="comment"
+                       rows="3"/>
+            </column>
+        </fieldGroup>
+        <scrollBox id="scrollBox"
+                   orientation="horizontal"
+                   scrollBars="horizontal"
+                   width="100%">
+            <optionsGroup datasource="suitableBankDs"
+                          optionsDatasource="allDocumentsDs"
+                          property="documents"/>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

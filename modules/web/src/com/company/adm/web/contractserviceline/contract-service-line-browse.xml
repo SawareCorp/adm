@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.contractserviceline.ContractServiceLineBrowse"
+        focusComponent="contractServiceLinesTable"
+        lookupComponent="contractServiceLinesTable"
+        messagesPack="com.company.adm.web.contractserviceline">
+    <dsContext>
+        <groupDatasource id="contractServiceLinesDs"
+                         class="com.company.adm.entity.contracts.ContractServiceLine"
+                         view="contractServiceLine-view">
+            <query>
+                <![CDATA[select e from adm$ContractServiceLine e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="contractServiceLinesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="contractServiceLinesTable"
+                datasource="contractServiceLinesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="contractServiceLinesTable"
+                    width="100%">
+            <actions>
+                <action id="create"
+                        openType="DIALOG"/>
+                <action id="edit"
+                        openType="DIALOG"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="service"/>
+                <column id="cost"/>
+                <column id="state"/>
+            </columns>
+            <rows datasource="contractServiceLinesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="contractServiceLinesTable.create"/>
+                <button id="editBtn"
+                        action="contractServiceLinesTable.edit"/>
+                <button id="removeBtn"
+                        action="contractServiceLinesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

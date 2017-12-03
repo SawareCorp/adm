@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.adm.web.scheduler.SchedulerAddScreen"
+        messagesPack="com.company.adm.web.scheduler">
+    <dialogMode modal="true"
+                width="330"/>
+    <layout spacing="true">
+        <vbox spacing="true">
+            <hbox spacing="true">
+                <dateField id="dateField"
+                           align="TOP_CENTER"
+                           caption="msg://dateLabel"
+                           height="30px"/>
+            </hbox>
+            <hbox spacing="true">
+                <textArea id="textArea"
+                          caption="msg://commentLabel"
+                          width="230px"/>
+                <button id="okButton"
+                        align="BOTTOM_RIGHT"
+                        caption="msg://okButton"
+                        invoke="onOkButtonClick"/>
+            </hbox>
+        </vbox>
+    </layout>
+</window>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.contract.ContractBrowse"
+        focusComponent="contractsTable"
+        lookupComponent="contractsTable"
+        messagesPack="com.company.adm.web.contract">
+    <dsContext>
+        <groupDatasource id="contractsDs"
+                         class="com.company.adm.entity.contracts.Contract"
+                         view="contract-view">
+            <query>
+                <![CDATA[select e from adm$Contract e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="contractsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="contractsTable"
+                datasource="contractsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="contractsTable"
+                    multiselect="true"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="contractNumber"/>
+                <column id="contractor"/>
+                <column id="contractStatus"/>
+                <column id="direction"/>
+                <column id="amount"/>
+                <column id="createDate"/>
+                <column id="responsibleManager"/>
+                <column id="source"/>
+                <column id="updateTs"
+                        caption="Обновлено"/>
+            </columns>
+            <rows datasource="contractsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="contractsTable.create"/>
+                <button id="editBtn"
+                        action="contractsTable.edit"/>
+                <button id="removeBtn"
+                        action="contractsTable.remove"/>
+                <button id="reportsButton"
+                        caption="msg://forPrinting"
+                        icon="icons/reports-print.png"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.sourceofincome.SourceOfIncomeEdit"
+        datasource="sourceOfIncomeDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.sourceofincome">
+    <dsContext>
+        <datasource id="sourceOfIncomeDs"
+                    class="com.company.adm.entity.SourceOfIncome"
+                    view="_local"/>
+    </dsContext>
+    <dialogMode height="300"
+                width="440"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="sourceOfIncomeDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="experience"/>
+                <field property="position"/>
+                <field property="document"/>
+                <field property="urgency"/>
+                <field property="incomeAmount"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

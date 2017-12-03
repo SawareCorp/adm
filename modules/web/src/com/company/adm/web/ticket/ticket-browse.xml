@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.ticket.TicketBrowse"
+        focusComponent="ticketsTable"
+        lookupComponent="ticketsTable"
+        messagesPack="com.company.adm.web.ticket">
+    <dsContext>
+        <groupDatasource id="ticketsDs"
+                         class="com.company.adm.entity.Ticket"
+                         view="ticket-view">
+            <query>
+                <![CDATA[select e from adm$Ticket e order by e.createTs desc]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="ticketsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="ticketsTable"
+                datasource="ticketsDs">
+            <properties excludeProperties="id, createTs, createdBy, updateTs, updatedBy"
+                        include=".*"/>
+        </filter>
+        <groupTable id="ticketsTable"
+                    multiselect="true"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+                <action id="refresh"/>
+                <action id="excel"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="interest"/>
+                <column id="phone"/>
+                <column id="source"/>
+                <column id="sourceDescription"/>
+                <column id="status"/>
+                <column id="statusDateTime"/>
+                <column id="lastCall"/>
+                <column id="lastMeeting"/>
+                <column id="characteristic"
+                        maxTextLength="20"/>
+                <column id="responsibleManager"/>
+                <column id="face"/>
+                <column id="updateTs"
+                        caption="Обновлено"/>
+            </columns>
+            <rows datasource="ticketsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="ticketsTable.create"/>
+                <button id="editBtn"
+                        action="ticketsTable.edit"/>
+                <button id="refreshButton"
+                        action="ticketsTable.refresh"/>
+                <button id="excelBtn"
+                        action="ticketsTable.excel"/>
+                <button id="reportsButton"
+                        caption="msg://forPrinting"
+                        icon="icons/reports-print.png"/>
+                <upload id="importPhysics"
+                        accept=".csv"
+                        permittedExtensions=".csv"
+                        uploadButtonCaption="msg://importPhysicsButton"
+                        uploadButtonIcon="font-icon:UPLOAD"/>
+                <upload id="importJuridical"
+                        accept=".csv"
+                        permittedExtensions=".csv"
+                        uploadButtonCaption="msg://importJuridicalButton"
+                        uploadButtonIcon="font-icon:UPLOAD"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

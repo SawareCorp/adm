@@ -1,0 +1,1 @@
+alter table ADM_SUITABLE_BANK drop foreign key FK_ADM_SUITABLE_BANK_ANALYTICS ;

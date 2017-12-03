@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.adm.web.smstemplate.SmsTemplateBrowse"
+        focusComponent="smsTemplatesTable"
+        lookupComponent="smsTemplatesTable"
+        messagesPack="com.company.adm.web.smstemplate">
+    <dsContext>
+        <datasource id="smsTemplateDs"
+                    class="com.company.adm.entity.SmsTemplate"
+                    view="_local"/>
+        <collectionDatasource id="smsTemplatesDs"
+                              class="com.company.adm.entity.SmsTemplate"
+                              view="_local">
+            <query>
+                <![CDATA[select e from adm$SmsTemplate e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <actions>
+        <action id="save"
+                caption="mainMsg://actions.Ok"
+                icon="icons/ok.png"
+                invoke="save"
+                shortcut="CTRL-ENTER"/>
+        <action id="cancel"
+                caption="mainMsg://actions.Cancel"
+                description="Esc"
+                icon="icons/cancel.png"
+                invoke="cancel"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <split id="split"
+               height="100%"
+               orientation="horizontal"
+               reversePosition="true"
+               width="100%">
+            <vbox id="lookupBox"
+                  expand="smsTemplatesTable"
+                  height="100%"
+                  margin="false,true,false,false"
+                  spacing="true">
+                <filter id="filter"
+                        applyTo="smsTemplatesTable"
+                        datasource="smsTemplatesDs">
+                    <properties include=".*"/>
+                </filter>
+                <table id="smsTemplatesTable"
+                       width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                        <action id="refresh"/>
+                    </actions>
+                    <columns>
+                        <column id="name"/>
+                        <column id="templateText"/>
+                    </columns>
+                    <rows datasource="smsTemplatesDs"/>
+                    <rowsCount/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn"
+                                action="smsTemplatesTable.create"/>
+                        <button id="editBtn"
+                                action="smsTemplatesTable.edit"/>
+                        <button id="removeBtn"
+                                action="smsTemplatesTable.remove"/>
+                        <button id="refreshBtn"
+                                action="smsTemplatesTable.refresh"/>
+                    </buttonsPanel>
+                </table>
+            </vbox>
+            <vbox id="editBox"
+                  expand="fieldGroupBox"
+                  height="100%"
+                  margin="false,false,false,true"
+                  spacing="true">
+                <vbox id="fieldGroupBox">
+                    <fieldGroup id="fieldGroup"
+                                datasource="smsTemplateDs">
+                        <column width="250px">
+                            <field property="name"/>
+                            <field property="templateText"
+                                   rows="5"/>
+                        </column>
+                    </fieldGroup>
+                </vbox>
+                <hbox id="actionsPane"
+                      spacing="true"
+                      visible="false">
+                    <button id="saveBtn"
+                            action="save"/>
+                    <button id="cancelBtn"
+                            action="cancel"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

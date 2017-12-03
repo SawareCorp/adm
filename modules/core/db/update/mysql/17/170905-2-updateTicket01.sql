@@ -1,0 +1,1 @@
+alter table ADM_TICKET add constraint FK_ADM_TICKET_QUESTIONNAIRE foreign key (QUESTIONNAIRE_ID) references ADM_QUESTIONNAIRE(ID);

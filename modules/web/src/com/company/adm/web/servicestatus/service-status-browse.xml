@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.servicestatus.ServiceStatusBrowse"
+        focusComponent="serviceStatusesTable"
+        lookupComponent="serviceStatusesTable"
+        messagesPack="com.company.adm.web.servicestatus">
+    <dsContext>
+        <groupDatasource id="serviceStatusesDs"
+                         class="com.company.adm.entity.contracts.ServiceStatus"
+                         view="_local">
+            <query>
+                <![CDATA[select e from adm$ServiceStatus e order by e.serialNumber]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="serviceStatusesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="serviceStatusesTable"
+                datasource="serviceStatusesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="serviceStatusesTable"
+                    width="100%">
+            <actions>
+                <action id="create"
+                        openType="DIALOG"/>
+                <action id="edit"
+                        openType="DIALOG"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="isCrediting"/>
+                <column id="isBookkeeping"/>
+                <column id="isJuridical"/>
+                <column id="serialNumber"/>
+            </columns>
+            <rows datasource="serviceStatusesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="serviceStatusesTable.create"/>
+                <button id="editBtn"
+                        action="serviceStatusesTable.edit"/>
+                <button id="removeBtn"
+                        action="serviceStatusesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

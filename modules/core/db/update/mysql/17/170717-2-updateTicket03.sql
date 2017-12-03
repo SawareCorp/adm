@@ -1,0 +1,25 @@
+alter table ADM_TICKET add column INTEREST_ID varchar(32) ;
+alter table ADM_TICKET add column SOURCE_BANK_ID varchar(32) ;
+alter table ADM_TICKET add column STATUS integer ^
+update ADM_TICKET set STATUS = 1 where STATUS is null ;
+alter table ADM_TICKET modify column STATUS integer not null ;
+alter table ADM_TICKET add column STATUS_DATE_TIME varchar(255) ;
+alter table ADM_TICKET add column LAST_CALL date ;
+alter table ADM_TICKET add column LAST_MEETING date ;
+alter table ADM_TICKET drop column UUID cascade ;
+alter table ADM_TICKET drop column DATE_OF_BIRTH cascade ;
+alter table ADM_TICKET drop column TELEPHONE cascade ;
+alter table ADM_TICKET drop column CONTACT1 cascade ;
+alter table ADM_TICKET drop column TELEPHONE1 cascade ;
+alter table ADM_TICKET drop column CUSTOMER_TYPE cascade ;
+alter table ADM_TICKET drop column DATE_OF_TICKET cascade ;
+alter table ADM_TICKET drop column LAST_CALLS cascade ;
+alter table ADM_TICKET drop column LAST_MEET cascade ;
+alter table ADM_TICKET drop column STATUS_ID cascade ;
+alter table ADM_TICKET modify column NAME varchar(255) ;
+update ADM_TICKET set SOURCE = 1 where SOURCE is null ;
+alter table ADM_TICKET modify column SOURCE integer not null ;
+alter table ADM_TICKET drop column AMOUNT cascade ;
+alter table ADM_TICKET add column AMOUNT bigint ;
+-- update ADM_TICKET set RESPONSIBLE_MANAGER_ID = <default_value> where RESPONSIBLE_MANAGER_ID is null ;
+alter table ADM_TICKET modify column RESPONSIBLE_MANAGER_ID varchar(32) not null ;

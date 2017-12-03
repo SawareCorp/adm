@@ -1,0 +1,1 @@
+alter table ADM_CUSTOM_SCHEDULER drop foreign key FK_ADM_CUSTOM_SCHEDULER_CONTRACT ;

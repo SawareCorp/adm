@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.contractor.ContractorEdit"
+        datasource="contractorDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.contractor">
+    <dsContext>
+        <datasource id="contractorDs"
+                    class="com.company.adm.entity.contracts.Contractor"
+                    view="contractor-view">
+            <collectionDatasource id="contactsDs"
+                                  property="contacts"/>
+            <collectionDatasource id="filesDs"
+                                  property="files"/>
+        </datasource>
+        <collectionDatasource id="contractsDs"
+                              class="com.company.adm.entity.contracts.Contract"
+                              view="contract-view">
+            <query>
+                <![CDATA[select e from adm$Contract e where e.contractor.id = :ds$contractorDs.id]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="800"
+                width="900"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <vbox id="dropZoneVbox"
+                  height="100%"
+                  spacing="true">
+                <hbox spacing="true">
+                    <fieldGroup id="fieldGroup"
+                                datasource="contractorDs">
+                        <column width="250px">
+                            <field property="name"
+                                   rows="4"/>
+                            <field property="representative"/>
+                            <field property="phone"/>
+                            <field property="face"/>
+                            <field property="comment"
+                                   rows="2"/>
+                        </column>
+                    </fieldGroup>
+                    <fieldGroup id="contractorFieldGroup"
+                                datasource="contractorDs">
+                        <column width="250px">
+                            <field property="address"
+                                   rows="2"/>
+                            <field property="dateBorn"/>
+                            <field property="passport"/>
+                            <field property="issuingAuthority"/>
+                            <field property="issueDate"/>
+                            <field property="divisionCode"/>
+                            <field property="snails"/>
+                            <field property="tin"/>
+                            <field property="kpp"/>
+                            <field property="ogrn"/>
+                            <field property="juridicalAddress"
+                                   rows="2"/>
+                            <field property="postAddress"
+                                   rows="2"/>
+                        </column>
+                    </fieldGroup>
+                </hbox>
+                <groupBox id="contactsBox"
+                          caption="msg://com.company.adm.entity.contracts/Contractor.contacts"
+                          width="87%">
+                    <table id="contactsTable"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="name"/>
+                            <column id="phone"/>
+                            <column id="comment"/>
+                        </columns>
+                        <rows datasource="contactsDs"/>
+                        <buttonsPanel>
+                            <button action="contactsTable.create"/>
+                            <button action="contactsTable.edit"/>
+                            <button action="contactsTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+                <groupBox id="contractsBox"
+                          caption="msg://contractsCaption"
+                          spacing="true"
+                          width="87%">
+                    <table id="contractsTable"
+                           width="100%">
+                        <actions>
+                            <action id="edit"/>
+                        </actions>
+                        <columns>
+                            <column id="contractNumber"/>
+                            <column id="createDate"/>
+                            <column id="amount"/>
+                        </columns>
+                        <rows datasource="contractsDs"/>
+                    </table>
+                </groupBox>
+                <groupBox id="filesBox"
+                          caption="msg://com.company.adm.entity.contracts/Contractor.files"
+                          width="87%">
+                    <table id="filesTable"
+                           width="100%">
+                        <actions>
+                            <action id="add"/>
+                            <action id="edit"
+                                    invoke="onEdit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="name"/>
+                            <column id="extension"/>
+                            <column id="createDate"/>
+                        </columns>
+                        <rows datasource="filesDs"/>
+                        <buttonsPanel>
+                            <button action="filesTable.add"/>
+                            <button action="filesTable.remove"/>
+                            <multiUpload id="contractorMultiUpload"
+                                         caption="msg://upload"
+                                         datasource="contractorDs"
+                                         dropZone="dropZoneVbox"
+                                         icon="font-icon:UPLOAD"
+                                         property="files"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+            </vbox>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.currentloan.CurrentLoanEdit"
+        datasource="currentLoanDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.currentloan">
+    <dsContext>
+        <datasource id="currentLoanDs"
+                    class="com.company.adm.entity.CurrentLoan"
+                    view="_local"/>
+    </dsContext>
+    <dialogMode height="300"
+                width="480"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="currentLoanDs">
+            <column width="250px">
+                <field property="organization"/>
+                <field property="creditSumm"/>
+                <field property="applicationDate"/>
+                <field property="dateOfLastPayment"/>
+                <field property="balanceOwed"/>
+                <field property="monthlyPayment"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

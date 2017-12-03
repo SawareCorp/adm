@@ -1,0 +1,12 @@
+alter table ADM_CONTRACTOR add column PASSPORT varchar(20) ;
+alter table ADM_CONTRACTOR add column ISSUING_AUTHORITY varchar(255) ;
+alter table ADM_CONTRACTOR add column ISSUE_DATE date ;
+alter table ADM_CONTRACTOR add column DIVISION_CODE varchar(10) ;
+alter table ADM_CONTRACTOR add column SNAILS varchar(255) ;
+alter table ADM_CONTRACTOR add column ADDRESS varchar(255) ;
+alter table ADM_CONTRACTOR add column TIN varchar(20) ;
+alter table ADM_CONTRACTOR add column KPP varchar(20) ;
+alter table ADM_CONTRACTOR add column OGRN varchar(255) ;
+alter table ADM_CONTRACTOR add column JURIDICAL_ADDRESS varchar(255) ;
+alter table ADM_CONTRACTOR add column POST_ADDRESS varchar(255) ;
+alter table ADM_CONTRACTOR drop column PERSONAL_DATA cascade ;

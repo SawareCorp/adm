@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.contractserviceline.ContractServiceLineEdit"
+        datasource="contractServiceLineDs"
+        focusComponent="contractServiceLineFieldGroup"
+        messagesPack="com.company.adm.web.contractserviceline">
+    <dsContext>
+        <datasource id="contractServiceLineDs"
+                    class="com.company.adm.entity.contracts.ContractServiceLine"
+                    view="contractServiceLine-view"/>
+        <collectionDatasource id="servicesDs"
+                              class="com.company.adm.entity.contracts.Service"
+                              view="service-view">
+            <query>
+                <![CDATA[select e from adm$Service e where e.direction = :custom$direction]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="statesDs"
+                              class="com.company.adm.entity.contracts.ServiceStatus"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from adm$ServiceStatus e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="banksDs"
+                              class="com.company.adm.entity.Bank"
+                              view="bank-view">
+            <query>
+                <![CDATA[select e from adm$Bank e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="240"
+                width="400"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <scrollBox width="AUTO">
+            <label stylename="h1"
+                   value="msg://serviceLabel"/>
+            <fieldGroup id="contractServiceLineFieldGroup"
+                        datasource="contractServiceLineDs">
+                <column width="250px">
+                    <field caption="msg://serviceName"
+                           optionsDatasource="servicesDs"
+                           property="service"
+                           required="true"/>
+                    <field property="cost"/>
+                </column>
+            </fieldGroup>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

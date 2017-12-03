@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.servicestatus.ServiceStatusEdit"
+        datasource="serviceStatusDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.servicestatus">
+    <dsContext>
+        <datasource id="serviceStatusDs"
+                    class="com.company.adm.entity.contracts.ServiceStatus"
+                    view="_local"/>
+    </dsContext>
+    <dialogMode height="270"
+                width="420"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="serviceStatusDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="isCrediting"/>
+                <field property="isBookkeeping"/>
+                <field property="isJuridical"/>
+                <field property="serialNumber"
+                       required="true"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

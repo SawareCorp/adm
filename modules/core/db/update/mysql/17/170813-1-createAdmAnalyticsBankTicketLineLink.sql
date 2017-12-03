@@ -1,0 +1,5 @@
+create table ADM_ANALYTICS_BANK_TICKET_LINE_LINK (
+    ANALYTICS_ID varchar(32),
+    BANK_TICKET_LINE_ID varchar(32),
+    primary key (ANALYTICS_ID, BANK_TICKET_LINE_ID)
+);

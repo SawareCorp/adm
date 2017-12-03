@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+       xmlns:context="http://www.springframework.org/schema/context">
+    <!-- Annotation-based beans -->
+    <context:component-scan base-package="com.company.adm"/>
+    <bean class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
+        <property name="serverSelector"
+                  ref="cuba_ServerSelector"/>
+        <property name="remoteServices">
+            <map>
+                <entry key="adm_TicketService"
+                       value="com.company.adm.service.TicketService"/>
+                <entry key="adm_ContractService"
+                       value="com.company.adm.service.ContractService"/>
+                <entry key="adm_UniqueNumbersExtService"
+                       value="com.company.adm.service.UniqueNumbersExtService"/>
+                <entry key="adm_SchedulerService"
+                       value="com.company.adm.service.SchedulerService"/>
+                <entry key="adm_BankService"
+                       value="com.company.adm.service.BankService"/>
+                <entry key="adm_ReportsService"
+                       value="com.company.adm.service.ReportsService"/>
+            </map>
+        </property>
+    </bean>
+</beans>

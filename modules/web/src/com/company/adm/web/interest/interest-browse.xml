@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.interest.InterestBrowse"
+        focusComponent="interestsTable"
+        lookupComponent="interestsTable"
+        messagesPack="com.company.adm.web.interest">
+    <dsContext>
+        <groupDatasource id="interestsDs"
+                         class="com.company.adm.entity.Interest"
+                         view="_local">
+            <query>
+                <![CDATA[select e from adm$Interest e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="interestsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="interestsTable"
+                datasource="interestsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="interestsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+            </columns>
+            <rows datasource="interestsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="interestsTable.create"/>
+                <button id="editBtn"
+                        action="interestsTable.edit"/>
+                <button id="removeBtn"
+                        action="interestsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

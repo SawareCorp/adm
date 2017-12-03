@@ -1,0 +1,1 @@
+alter table ADM_CONTRACT add constraint FK_ADM_CONTRACT_QUESTIONNAIRE foreign key (QUESTIONNAIRE_ID) references ADM_QUESTIONNAIRE(ID);

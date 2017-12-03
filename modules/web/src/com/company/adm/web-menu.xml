@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <item insertBefore="reports"
+          screen="Scheduler"/>
+    <item insertBefore="reports"
+          screen="adm$Ticket.browse"/>
+    <item insertBefore="reports"
+          screen="adm$Contract.browse"/>
+    <item insertBefore="reports"
+          screen="adm$Contractor.browse"/>
+    <item insertBefore="reports"
+          screen="adm$SuitableBank.browse"/>
+    <menu id="application-adm"
+          insertBefore="reports">
+        <item screen="adm$Bank.browse"/>
+        <item screen="adm$Document.browse"/>
+        <item screen="adm$Interest.browse"/>
+        <item screen="adm$SourceDescription.browse"/>
+        <item screen="adm$Comment.browse"/>
+        <item screen="adm$TicketState.browse"/>
+        <item screen="adm$SuitableBankState.browse"/>
+        <item screen="adm$ServiceStatus.browse"/>
+        <item screen="adm$Service.browse"/>
+        <item screen="adm$SmsTemplate.browse"/>
+    </menu>
+</menu-config>

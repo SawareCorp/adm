@@ -1,0 +1,2 @@
+alter table ADM_BANK_TICKET_LINE add constraint FK_ADM_BANK_TICKET_LINE_BANK foreign key (BANK_ID) references ADM_BANK(ID);
+create index IDX_ADM_BANK_TICKET_LINE_BANK on ADM_BANK_TICKET_LINE (BANK_ID);

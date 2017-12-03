@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.document.DocumentBrowse"
+        focusComponent="documentsTable"
+        lookupComponent="documentsTable"
+        messagesPack="com.company.adm.web.document">
+    <dsContext>
+        <groupDatasource id="documentsDs"
+                         class="com.company.adm.entity.contracts.analytics.Document"
+                         view="_local">
+            <query>
+                <![CDATA[select e from adm$Document e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="documentsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="documentsTable"
+                datasource="documentsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="documentsTable"
+                    multiselect="true"
+                    width="100%">
+            <actions>
+                <action id="create"
+                        openType="DIALOG"/>
+                <action id="edit"
+                        openType="DIALOG"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+            </columns>
+            <rows datasource="documentsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="documentsTable.create"/>
+                <button id="editBtn"
+                        action="documentsTable.edit"/>
+                <button id="removeBtn"
+                        action="documentsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

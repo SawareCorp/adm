@@ -1,0 +1,5 @@
+create table ADM_CONTRACTOR_FILE_DESCRIPTOR_LINK (
+    CONTRACTOR_ID varchar(32),
+    FILE_DESCRIPTOR_ID varchar(32),
+    primary key (CONTRACTOR_ID, FILE_DESCRIPTOR_ID)
+);

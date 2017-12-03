@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             version="2.0">
+    <persistence-unit name="adm"
+                      transaction-type="RESOURCE_LOCAL">
+        <class>com.company.adm.entity.Contact</class>
+        <class>com.company.adm.entity.Bank</class>
+        <class>com.company.adm.entity.Ticket</class>
+        <class>com.company.adm.entity.Interest</class>
+        <class>com.company.adm.entity.contracts.Contractor</class>
+        <class>com.company.adm.entity.contracts.Contract</class>
+        <class>com.company.adm.entity.contracts.Service</class>
+        <class>com.company.adm.entity.contracts.ServiceStatus</class>
+        <class>com.company.adm.entity.contracts.ContractServiceLine</class>
+        <class>com.company.adm.entity.contracts.Comment</class>
+        <class>com.company.adm.entity.contracts.analytics.SuitableBank</class>
+        <class>com.company.adm.entity.contracts.analytics.Document</class>
+        <class>com.company.adm.entity.contracts.analytics.Analytics</class>
+        <class>com.company.adm.entity.scheduler.CustomScheduler</class>
+        <class>com.company.adm.entity.SourceDescription</class>
+        <class>com.company.adm.entity.contracts.analytics.BankTicketLine</class>
+        <class>com.company.adm.entity.Questionnaire</class>
+        <class>com.company.adm.entity.CurrentLoan</class>
+        <class>com.company.adm.entity.SourceOfIncome</class>
+        <class>com.company.adm.entity.TicketState</class>
+        <class>com.company.adm.entity.contracts.analytics.SuitableBankState</class>
+        <class>com.company.adm.entity.SmsTemplate</class>
+    </persistence-unit>
+</persistence>

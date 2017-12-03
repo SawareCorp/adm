@@ -1,0 +1,23 @@
+<Context>
+    <!-- Database connection -->
+    <Resource driverClassName="com.mysql.jdbc.Driver"
+              maxIdle="2"
+              maxTotal="20"
+              maxWaitMillis="5000"
+              name="jdbc/CubaDS"
+              password="20071995"
+              type="javax.sql.DataSource"
+              url="jdbc:mysql://10.10.1.50/adm?useSSL=false&amp;allowMultiQueries=true"
+              username="aridg"/>
+    <!-- Switch off session serialization -->
+    <Manager pathname=""/>
+    <!--<Resource driverClassName="org.hsqldb.jdbc.JDBCDriver"
+          maxIdle="2"
+          maxTotal="20"
+          maxWaitMillis="5000"
+          name="jdbc/CubaDS"
+          password=""
+          type="javax.sql.DataSource"
+          url="jdbc:hsqldb:hsql://localhost/adm"
+          username="sa"/>-->
+</Context>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.contractor.ContractorBrowse"
+        focusComponent="contractorsTable"
+        lookupComponent="contractorsTable"
+        messagesPack="com.company.adm.web.contractor">
+    <dsContext>
+        <groupDatasource id="contractorsDs"
+                         class="com.company.adm.entity.contracts.Contractor"
+                         view="contractor-view">
+            <query>
+                <![CDATA[select e from adm$Contractor e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="contractorsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="contractorsTable"
+                datasource="contractorsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="contractorsTable"
+                    width="100%">
+            <actions>
+                <action id="create"
+                        openType="THIS_TAB"/>
+                <action id="edit"
+                        openType="THIS_TAB"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="representative"/>
+                <column id="dateBorn"/>
+                <column id="phone"/>
+                <column id="face"/>
+                <column id="comment"/>
+            </columns>
+            <rows datasource="contractorsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="contractorsTable.create"/>
+                <button id="editBtn"
+                        action="contractorsTable.edit"/>
+                <button id="removeBtn"
+                        action="contractorsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

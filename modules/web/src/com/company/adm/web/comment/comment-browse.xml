@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.comment.CommentBrowse"
+        focusComponent="commentsTable"
+        lookupComponent="commentsTable"
+        messagesPack="com.company.adm.web.comment">
+    <dsContext>
+        <groupDatasource id="commentsDs"
+                         class="com.company.adm.entity.contracts.Comment"
+                         view="comment-view">
+            <query>
+                <![CDATA[select e from adm$Comment e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="commentsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="commentsTable"
+                datasource="commentsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="commentsTable"
+                    width="100%">
+            <actions>
+                <action id="edit"
+                        caption="msg://editActionCapt"
+                        invoke="onEdit"
+                        trackSelection="true"/>
+            </actions>
+            <columns>
+                <column id="user"/>
+                <column id="comment"/>
+                <column id="dateTime"/>
+                <column id="contract"/>
+                <column id="ticket"/>
+            </columns>
+            <rows datasource="commentsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="editBtn"
+                        action="commentsTable.edit"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

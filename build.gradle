@@ -1,0 +1,270 @@
+
+buildscript {
+    ext.cubaVersion = '6.6.4'
+    repositories {
+        mavenLocal()
+        maven {
+            url 'https://repo.cuba-platform.com/content/groups/work'
+            credentials {
+                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : 'cuba')
+                password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
+            }
+        }
+        maven {
+            url 'https://repo.cuba-platform.com/content/groups/premium'
+            credentials {
+                username(rootProject.hasProperty('premiumRepoUser') ? rootProject['premiumRepoUser'] : System.getenv('CUBA_PREMIUM_USER'))
+                password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : System.getenv('CUBA_PREMIUM_PASSWORD'))
+            }
+        }
+    }
+    dependencies {
+        classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
+    }
+}
+
+def globalModule = project(':adm-global')
+def coreModule = project(':adm-core')
+def guiModule = project(':adm-gui')
+def webModule = project(':adm-web')
+def webThemesModule = project(':adm-web-themes')
+
+def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
+
+
+apply(plugin: 'idea')
+apply(plugin: 'cuba')
+
+cuba {
+    artifact {
+        group = 'com.company.adm'
+        version = '0.1'
+        isSnapshot = true
+    }
+    tomcat {
+        dir = "$project.rootDir/deploy/tomcat"
+    }
+}
+
+dependencies {
+    appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
+    appComponent("com.haulmont.reports:reports-global:$cubaVersion")
+    appComponent("com.haulmont.charts:charts-global:$cubaVersion")
+    appComponent("com.haulmont.fts:fts-global:$cubaVersion")
+
+}
+
+def mysql = 'mysql:mysql-connector-java:5.1.38'
+
+configure([globalModule, coreModule, guiModule, webModule]) {
+    apply(plugin: 'java')
+    apply(plugin: 'maven')
+    apply(plugin: 'idea')
+    apply(plugin: 'cuba')
+
+    dependencies {
+        testCompile('junit:junit:4.12')
+    }
+
+    task sourceJar(type: Jar) {
+        from file('src')
+        classifier = 'sources'
+    }
+
+    artifacts {
+        archives sourceJar
+    }
+}
+
+configure(globalModule) {
+    task enhance(type: CubaEnhancing)
+
+    
+}
+
+configure(coreModule) {
+
+    configurations {
+        jdbc
+        dbscripts
+    }
+
+    dependencies {
+        compile(globalModule)
+        provided(servletApi)
+        jdbc(mysql)
+        testRuntime(mysql)
+
+    }
+
+    task cleanConf(description: 'Cleans up conf directory') {
+        doLast {
+            def dir = new File(cuba.tomcat.dir, '/conf/adm-core')
+            if (dir.isDirectory()) {
+                ant.delete(includeemptydirs: true) {
+                    fileset(dir: dir, includes: '**/*', excludes: 'local.app.properties')
+                }
+            }
+        }
+    }
+
+    task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
+        appName = 'adm-core'
+        appJars('adm-global', 'adm-core')
+    }
+
+    task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
+        dbms = 'mysql'
+        host = '10.10.1.50'
+        dbName = 'adm'
+        dbUser = 'aridg'
+        dbPassword = '20071995'
+        connectionParams = '?useSSL=false&allowMultiQueries=true'
+    }
+
+    task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
+        dbms = 'mysql'
+        host = '10.10.1.50'
+        dbName = 'adm'
+        dbUser = 'aridg'
+        dbPassword = '20071995'
+        connectionParams = '?useSSL=false&allowMultiQueries=true'
+    }
+}
+
+configure(guiModule) {
+    dependencies {
+        compile(globalModule)
+
+    }
+
+    task deployConf(type: Copy) {
+        from file('src')
+        include "com/company/adm/**"
+        into "$cuba.tomcat.dir/conf/adm"
+    }
+}
+
+configure(webModule) {
+    configurations {
+        webcontent
+    }
+
+    dependencies {
+        provided(servletApi)
+        compile(guiModule)
+
+    }
+    
+    task webArchive(type: Zip) {
+        from file("$buildDir/web")
+        from file('web')
+        classifier = 'web'
+    }
+
+    artifacts {
+        archives webArchive
+    }
+
+    task deployConf(type: Copy) {
+        from file('src')
+        include "com/company/adm/**"
+        into "$cuba.tomcat.dir/conf/adm"
+    }
+
+    task clearMessagesCache(type: CubaClearMessagesCache) {
+        appName = 'adm'
+    }
+    deployConf.dependsOn clearMessagesCache
+
+    task cleanConf(description: 'Cleans up conf directory') {
+        doLast {
+            def dir = new File(cuba.tomcat.dir, '/conf/adm')
+            if (dir.isDirectory()) {
+                ant.delete(includeemptydirs: true) {
+                    fileset(dir: dir, includes: '**/*', excludes: 'local.app.properties')
+                }
+            }
+        }
+    }
+
+    task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
+        appName = 'adm'
+        appJars('adm-global', 'adm-gui', 'adm-web')
+    }
+    task buildScssThemes(type: CubaWebScssThemeCreation)
+    task deployThemes(type: CubaDeployThemeTask, dependsOn: buildScssThemes)
+    assemble.dependsOn buildScssThemes
+}
+
+configure(webThemesModule) {
+    apply(plugin: 'java')
+    apply(plugin: 'maven')
+    apply(plugin: 'cuba')
+
+    appModuleType = 'web-themes'
+
+    buildDir = file('../build/scss-themes')
+
+    sourceSets {
+        main {
+            java {
+                srcDir '.'
+            }
+            resources {
+                srcDir '.'
+            }
+        }
+    }
+}
+
+
+
+
+
+task undeploy(type: Delete, dependsOn: ':adm-web:cleanConf') {
+    delete("$cuba.tomcat.dir/shared")
+    delete("$cuba.tomcat.dir/webapps/adm-core")
+    delete("$cuba.tomcat.dir/webapps/adm")
+}
+
+task restart(dependsOn: ['stop', ':adm-core:deploy', ':adm-web:deploy'], description: 'Redeploys applications and restarts local Tomcat') {
+    doLast {
+        ant.waitfor(maxwait: 6, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
+            not {
+                socket(server: 'localhost', port: '8787')
+            }
+        }
+        start.execute()
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}
+
+apply from: 'extra.gradle'
+
+task buildWar(type: CubaWarBuilding) {
+    coreContextXmlPath = 'modules/core/web/META-INF/war-context.xml'
+    appProperties = [
+    'cuba.automaticDatabaseUpdate' : true,
+    'fts.enabled' : true,
+    'cuba.schedulingActive' : true,
+    'cuba.bruteForceProtection.enabled' : true,
+    'reporting.useBackgroundReportProcessing' : true,
+    'cuba.web.loginDialogDefaultUser' : '<disabled>',
+    'cuba.web.loginDialogDefaultPassword' : '<disabled>'
+]
+    singleWar = false
+    includeContextXml = true
+    includeJdbcDriver = true
+    appHome = '/opt/tomcat/adm_home'
+}
+
+task buildUberJar(type: CubaUberJarBuilding) {
+    singleJar = true
+    logbackConfigurationFile = 'etc/logback.xml'
+    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
+    appProperties = ['cuba.automaticDatabaseUpdate' : true]
+}

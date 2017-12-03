@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.adm.web.smstemplate.Smssending"
+        messagesPack="com.company.adm.web.smstemplate">
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="vbox">
+        <vbox id="vbox"
+              margin="true"
+              spacing="true">
+            <lookupField/>
+            <textArea/>
+        </vbox>
+        <buttonsPanel/>
+    </layout>
+</window>

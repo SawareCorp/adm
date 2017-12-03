@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.bank.BankEdit"
+        datasource="bankDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.bank">
+    <dsContext>
+        <datasource id="bankDs"
+                    class="com.company.adm.entity.Bank"
+                    view="bank-view">
+            <collectionDatasource id="contactsDs"
+                                  property="contacts"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="bankDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="address"/>
+            </column>
+        </fieldGroup>
+        <groupBox id="contactsBox"
+                  caption="msg://com.company.adm.entity/Bank.contacts">
+            <table id="contactsTable"
+                   width="100%">
+                <actions>
+                    <action id="create"/>
+                    <action id="edit"/>
+                    <action id="remove"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                    <column id="phone"/>
+                    <column id="comment"/>
+                </columns>
+                <rows datasource="contactsDs"/>
+                <buttonsPanel>
+                    <button action="contactsTable.create"/>
+                    <button action="contactsTable.edit"/>
+                    <button action="contactsTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

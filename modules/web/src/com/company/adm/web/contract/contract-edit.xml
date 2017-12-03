@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.contract.ContractEdit"
+        datasource="contractDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.contract">
+    <dsContext>
+        <datasource id="contractDs"
+                    class="com.company.adm.entity.contracts.Contract"
+                    loadDynamicAttributes="true"
+                    view="contract-view">
+            <collectionDatasource id="servicesDs"
+                                  property="services"/>
+            <collectionDatasource id="historyDs"
+                                  property="history"/>
+            <collectionDatasource id="analyticsDs"
+                                  property="analytics">
+                <collectionDatasource id="ticketToBanksDs"
+                                      property="ticketToBanks"/>
+                <collectionDatasource id="suitableBanksDs"
+                                      property="suitableBanks"/>
+                <collectionDatasource id="analyticsCurrentLoansDs"
+                                      property="currentLoans"/>
+            </collectionDatasource>
+            <datasource id="questionnaireDs"
+                        property="questionnaire">
+                <collectionDatasource id="bankTicketsDs"
+                                      property="bankTickets">
+                    <datasource id="bankDs"
+                                property="bank"/>
+                </collectionDatasource>
+                <collectionDatasource id="currentLoansDs"
+                                      property="currentLoans"/>
+                <collectionDatasource id="incomesDs"
+                                      property="incomes"/>
+            </datasource>
+            <collectionDatasource id="internalFilesDs"
+                                  property="internalFiles"/>
+            <collectionDatasource id="customSchedulerDs"
+                                  property="schedules"/>
+        </datasource>
+        <collectionDatasource id="contractorsDs"
+                              class="com.company.adm.entity.contracts.Contractor"
+                              view="contractor-view">
+            <query>
+                <![CDATA[select e from adm$Contractor e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="serviceStatusesDs"
+                              class="com.company.adm.entity.contracts.ServiceStatus"
+                              view="serviceStatus-view">
+            <query>
+                <![CDATA[select e from adm$ServiceStatus e 
+where e.directionsList like concat('%', :ds$contractDs.direction, '%')
+order by e.serialNumber]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="responsibleManagersDs"
+                              class="com.haulmont.cuba.security.entity.User"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from sec$User e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="sourcesDs"
+                              class="com.company.adm.entity.SourceDescription"
+                              view="_local">
+            <query>
+                <![CDATA[select e from adm$SourceDescription e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tabSheet"
+            spacing="true">
+        <tabSheet id="tabSheet"
+                  stylename="centered-tabs equal-width-tabs framed">
+            <tab id="contractTab"
+                 caption="msg://contractTabCaption"
+                 margin="true"
+                 spacing="true">
+                <scrollBox id="scrollBox"
+                           height="100%">
+                    <vbox id="dropZoneVbox"
+                          height="100%">
+                        <hbox responsive="true"
+                              spacing="true"
+                              width="100%">
+                            <fieldGroup id="fieldGroup"
+                                        datasource="contractDs">
+                                <column width="350px">
+                                    <field property="ticket"/>
+                                    <field property="contractNumber"/>
+                                    <field optionsDatasource="contractorsDs"
+                                           property="contractor"/>
+                                    <field property="contractStatus"/>
+                                    <field property="direction"/>
+                                    <field property="amount"/>
+                                    <field property="createDate"/>
+                                    <field optionsDatasource="responsibleManagersDs"
+                                           property="responsibleManager"/>
+                                    <field optionsDatasource="sourcesDs"
+                                           property="source"/>
+                                    <field property="compensation"/>
+                                    <field property="desiredAmount"/>
+                                    <field property="contractEvent"/>
+                                    <field property="eventTime"/>
+                                </column>
+                            </fieldGroup>
+                            <fieldGroup id="contractorFieldGroup"
+                                        datasource="contractorsDs">
+                                <column width="300px">
+                                    <field property="name"/>
+                                    <field property="phone"/>
+                                    <field property="representative"/>
+                                    <field property="dateBorn"/>
+                                    <field property="email"/>
+                                    <field property="face"/>
+                                    <field property="comment"
+                                           rows="2"/>
+                                    <field mask="## ## ######"
+                                           property="passport"
+                                           valueMode="masked"/>
+                                    <field property="issuingAuthority"/>
+                                    <field property="issueDate"/>
+                                    <field mask="###-###"
+                                           property="divisionCode"/>
+                                    <field mask="###-###-### ##"
+                                           property="snails"
+                                           valueMode="masked"/>
+                                    <field property="address"
+                                           rows="2"/>
+                                    <field property="tin"/>
+                                    <field property="kpp"/>
+                                    <field property="ogrn"/>
+                                    <field property="juridicalAddress"/>
+                                    <field property="postAddress"/>
+                                </column>
+                            </fieldGroup>
+                            <vbox id="newContractorVbox"
+                                  spacing="true"
+                                  width="AUTO">
+                                <textField id="extNameField"
+                                           align="MIDDLE_CENTER"
+                                           caption="msg://extNameField"
+                                           width="250px"/>
+                                <lookupField id="extFaceField"
+                                             align="MIDDLE_CENTER"
+                                             caption="msg://face"
+                                             width="250px"/>
+                                <dateField id="extDateBornField"
+                                           align="MIDDLE_CENTER"
+                                           caption="msg://extDateBornField"
+                                           dateFormat="dd.MM.yyyy"
+                                           width="250px"/>
+                                <textField id="extTinField"
+                                           align="MIDDLE_CENTER"
+                                           caption="msg://inn"
+                                           width="250px"/>
+                                <button id="createContractor"
+                                        align="MIDDLE_CENTER"
+                                        caption="msg://createContractor"
+                                        invoke="onCreateContractorClick"
+                                        width="250px"/>
+                            </vbox>
+                        </hbox>
+                        <groupBox id="servicesBox"
+                                  caption="msg://com.company.adm.entity.contracts/Contract.services"
+                                  spacing="true">
+                            <table id="servicesTable"
+                                   editable="true"
+                                   width="100%">
+                                <actions>
+                                    <action id="create"
+                                            openType="DIALOG"/>
+                                    <action id="remove"/>
+                                </actions>
+                                <columns>
+                                    <column id="service"/>
+                                    <column id="cost"
+                                            editable="true"/>
+                                    <column id="state"
+                                            editable="true"
+                                            optionsDatasource="serviceStatusesDs"/>
+                                </columns>
+                                <rows datasource="servicesDs"/>
+                                <buttonsPanel>
+                                    <button action="servicesTable.create"/>
+                                    <button action="servicesTable.remove"/>
+                                </buttonsPanel>
+                            </table>
+                            <table id="analyticsTable"
+                                   caption="Аналитика"
+                                   width="100%">
+                                <actions>
+                                    <action id="create"/>
+                                    <action id="edit"/>
+                                    <action id="remove"/>
+                                </actions>
+                                <columns>
+                                    <column id="number"/>
+                                    <column id="dateCreation"/>
+                                    <column id="monthlyPayments"/>
+                                    <column id="currentCredits"/>
+                                    <column id="comment"
+                                            maxTextLength="20"/>
+                                </columns>
+                                <rows datasource="analyticsDs"/>
+                                <buttonsPanel>
+                                    <button action="analyticsTable.create"/>
+                                    <button action="analyticsTable.edit"/>
+                                    <button action="analyticsTable.remove"/>
+                                    <button id="reportAnalytic"
+                                            caption="msg://onPrint"
+                                            invoke="onReportAnalyticClick"/>
+                                </buttonsPanel>
+                            </table>
+                        </groupBox>
+                        <groupBox id="internalFilesBox"
+                                  caption="msg://com.company.adm.entity.contracts/Contract.internalFiles">
+                            <table id="internalFilesTable"
+                                   multiselect="true"
+                                   width="100%">
+                                <actions>
+                                    <action id="remove"/>
+                                    <action id="edit"
+                                            caption="msg://internalFilesEditCaption"
+                                            icon="icons/download.png"
+                                            invoke="onEdit"/>
+                                </actions>
+                                <columns>
+                                    <column id="name"/>
+                                    <column id="extension"/>
+                                    <column id="size"/>
+                                    <column id="createDate"/>
+                                </columns>
+                                <rows datasource="internalFilesDs"/>
+                                <buttonsPanel>
+                                    <multiUpload id="contractMultiUpload"
+                                                 caption="msg://upload"
+                                                 dropZone="dropZoneVbox"
+                                                 icon="font-icon:UPLOAD"/>
+                                    <button id="editButton"
+                                            action="internalFilesTable.edit"/>
+                                    <button action="internalFilesTable.remove"/>
+                                </buttonsPanel>
+                            </table>
+                        </groupBox>
+                    </vbox>
+                </scrollBox>
+            </tab>
+            <tab id="questionnareTab"
+                 caption="msg://questionnareTabCaption"
+                 margin="true,false,false,false"
+                 spacing="true">
+                <scrollBox id="scrollbox_1"
+                           height="100%"
+                           spacing="true">
+                    <fieldGroup id="questionnaireFieldGroup"
+                                datasource="questionnaireDs"
+                                width="100%">
+                        <column width="375px">
+                            <field property="name"/>
+                            <field property="dateBorn"/>
+                            <field property="phone"/>
+                            <field property="creditAmount"/>
+                            <field property="creditTerm"/>
+                            <field property="registrationAddress"/>
+                            <field property="actualAddress"/>
+                            <field property="secondDocument"/>
+                            <field property="propertyInOwn"
+                                   rows="5"/>
+                            <field property="arrears"
+                                   rows="3"/>
+                            <field property="participationInLegalEntities"/>
+                            <field property="registrationAsIp"/>
+                            <field property="prosecutions"/>
+                            <field property="litigations"/>
+                            <field property="debtOfBeiliffs"/>
+                            <field property="underageChildren"/>
+                            <field property="guarantors"/>
+                        </column>
+                    </fieldGroup>
+                    <groupBox id="bankTicketsBox"
+                              caption="msg://com.company.adm.entity/Questionnaire.bankTickets">
+                        <table id="bankTicketsTable"
+                               width="100%">
+                            <actions>
+                                <action id="create"
+                                        openType="DIALOG"/>
+                                <action id="edit"
+                                        openType="DIALOG"/>
+                                <action id="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="bank"/>
+                                <column id="applicationDate"/>
+                            </columns>
+                            <rows datasource="bankTicketsDs"/>
+                            <buttonsPanel>
+                                <button action="bankTicketsTable.create"/>
+                                <button action="bankTicketsTable.edit"/>
+                                <button action="bankTicketsTable.remove"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                    <groupBox id="currentLoansBox"
+                              caption="msg://com.company.adm.entity/Questionnaire.currentLoans">
+                        <table id="currentLoansTable"
+                               width="100%">
+                            <actions>
+                                <action id="create"
+                                        openType="DIALOG"/>
+                                <action id="edit"
+                                        openType="DIALOG"/>
+                                <action id="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="organization"/>
+                                <column id="creditSumm"/>
+                                <column id="applicationDate"/>
+                                <column id="dateOfLastPayment"/>
+                                <column id="balanceOwed"/>
+                                <column id="monthlyPayment"/>
+                            </columns>
+                            <rows datasource="currentLoansDs"/>
+                            <buttonsPanel>
+                                <button action="currentLoansTable.create"/>
+                                <button action="currentLoansTable.edit"/>
+                                <button action="currentLoansTable.remove"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                    <groupBox id="incomesBox"
+                              caption="msg://com.company.adm.entity/Questionnaire.incomes">
+                        <table id="incomesTable"
+                               width="100%">
+                            <actions>
+                                <action id="create"
+                                        openType="DIALOG"/>
+                                <action id="edit"
+                                        openType="DIALOG"/>
+                                <action id="remove"/>
+                            </actions>
+                            <columns>
+                                <column id="name"/>
+                                <column id="incomeAmount"/>
+                                <column id="experience"/>
+                                <column id="position"/>
+                                <column id="document"/>
+                                <column id="urgency"/>
+                            </columns>
+                            <rows datasource="incomesDs"/>
+                            <buttonsPanel>
+                                <button action="incomesTable.create"/>
+                                <button action="incomesTable.edit"/>
+                                <button action="incomesTable.remove"/>
+                            </buttonsPanel>
+                        </table>
+                    </groupBox>
+                </scrollBox>
+            </tab>
+            <tab id="historyTab"
+                 caption="msg://historyTabCaption"
+                 expand="historyTable"
+                 margin="true"
+                 spacing="true">
+                <table id="historyTable"
+                       contextMenuEnabled="false"
+                       reorderingAllowed="false"
+                       showSelection="false"
+                       sortable="false"
+                       stylename="no-header"
+                       width="100%">
+                    <columns>
+                        <column id="comment"
+                                caption="Комментарии"
+                                generator="generateCommentLine"
+                                maxTextLength="80"
+                                sortable="false"/>
+                    </columns>
+                    <rows datasource="historyDs"/>
+                </table>
+                <hbox id="hbox"
+                      expand="newCommentText"
+                      spacing="true"
+                      width="100%">
+                    <textArea id="newCommentText"/>
+                    <button id="addCommentButton"
+                            align="BOTTOM_LEFT"
+                            caption="msg://addCommentButtonCaption"
+                            invoke="onAddCommentButtonClick"/>
+                </hbox>
+            </tab>
+        </tabSheet>
+        <hbox spacing="true">
+            <frame id="windowActions"
+                   screen="extendedEditWindowActions"/>
+            <button id="reportsButton"
+                    caption="msg://onPrint"
+                    icon="icons/reports-print.png"/>
+            <button id="schedulerButton"
+                    caption="msg://schedulerButton"
+                    icon="font-icon:CALENDAR"
+                    invoke="onSchedulerButtonClick"/>
+        </hbox>
+    </layout>
+</window>

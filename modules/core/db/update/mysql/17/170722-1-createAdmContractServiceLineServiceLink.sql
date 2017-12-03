@@ -1,0 +1,5 @@
+create table ADM_CONTRACT_SERVICE_LINE_SERVICE_LINK (
+    CONTRACT_SERVICE_LINE_ID varchar(32),
+    SERVICE_ID varchar(32),
+    primary key (CONTRACT_SERVICE_LINE_ID, SERVICE_ID)
+);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.service.ServiceEdit"
+        datasource="serviceDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.service">
+    <dsContext>
+        <datasource id="serviceDs"
+                    class="com.company.adm.entity.contracts.Service"
+                    view="service-view"/>
+    </dsContext>
+    <dialogMode height="200"
+                width="500"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="serviceDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="direction"/>
+                <field property="defaultTax"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.analytics.AnalyticsEdit"
+        datasource="analyticsDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.analytics">
+    <dsContext>
+        <datasource id="analyticsDs"
+                    class="com.company.adm.entity.contracts.analytics.Analytics"
+                    view="analytics-view">
+            <collectionDatasource id="suitableBanksDs"
+                                  property="suitableBanks">
+                <datasource id="stateDs"
+                            property="state"/>
+            </collectionDatasource>
+            <collectionDatasource id="ticketToBanksDs"
+                                  property="ticketToBanks"/>
+            <collectionDatasource id="analyticsCurrentLoansDs"
+                                  property="currentLoans"/>
+        </datasource>
+        <collectionDatasource id="banksDs"
+                              class="com.company.adm.entity.Bank"
+                              view="bank-view">
+            <query>
+                <![CDATA[select e from adm$Bank e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="suitableBankStatesDs"
+                              class="com.company.adm.entity.contracts.analytics.SuitableBankState"
+                              view="_local">
+            <query>
+                <![CDATA[select e from adm$SuitableBankState e order by e.position]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="groupBox_scrollBox"
+            spacing="true">
+        <scrollBox id="groupBox_scrollBox">
+            <label stylename="h1"
+                   value="msg://analiticsLabel"/>
+            <hbox spacing="true">
+                <fieldGroup id="fieldGroup"
+                            datasource="analyticsDs">
+                    <column width="250px">
+                        <field editable="false"
+                               property="contract"/>
+                        <field property="number"/>
+                        <field property="dateCreation"/>
+                        <field property="scoringScore"/>
+                    </column>
+                </fieldGroup>
+                <fieldGroup id="analyticsFieldGroup"
+                            datasource="analyticsDs">
+                    <column width="250px">
+                        <field property="currentCredits"/>
+                        <field property="monthlyPayments"/>
+                        <field property="arrears"/>
+                        <field property="securityCheck"/>
+                        <field property="comment"
+                               rows="2"/>
+                    </column>
+                </fieldGroup>
+            </hbox>
+            <groupBox id="bankTicketsBox"
+                      caption="msg://bankTicketsLabel"
+                      collapsable="true"
+                      collapsed="true"
+                      height="100%"
+                      spacing="true">
+                <table id="ticketToBanksTable"
+                       width="100%">
+                    <actions>
+                        <action id="create"
+                                caption="msg://addSuitableBankButton"
+                                openType="DIALOG"/>
+                        <action id="edit"
+                                openType="DIALOG"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="bank.name"/>
+                        <column id="applicationDate"/>
+                        <column id="comment"
+                                maxTextLength="20"/>
+                    </columns>
+                    <rows datasource="ticketToBanksDs"/>
+                    <buttonsPanel>
+                        <button id="createBankTicketButton"
+                                action="ticketToBanksTable.create"/>
+                        <button action="ticketToBanksTable.edit"/>
+                        <button action="ticketToBanksTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+            <groupBox id="currentLoansBox"
+                      caption="msg://com.company.adm.entity.contracts.analytics/Analytics.currentLoans">
+                <table id="currentLoansTable"
+                       width="100%">
+                    <actions>
+                        <action id="create"
+                                openType="DIALOG"/>
+                        <action id="edit"
+                                openType="DIALOG"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="organization"/>
+                        <column id="creditSumm"/>
+                        <column id="applicationDate"/>
+                        <column id="dateOfLastPayment"/>
+                        <column id="balanceOwed"/>
+                        <column id="monthlyPayment"/>
+                    </columns>
+                    <rows datasource="analyticsCurrentLoansDs"/>
+                    <buttonsPanel>
+                        <button action="currentLoansTable.create"/>
+                        <button action="currentLoansTable.edit"/>
+                        <button action="currentLoansTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+            <groupBox id="suitableBanksBox"
+                      caption="msg://suiableBanksGroupBox">
+                <table id="suitableBanksTable"
+                       contextMenuEnabled="false"
+                       editable="true"
+                       width="100%">
+                    <actions>
+                        <action id="create"
+                                openType="DIALOG"/>
+                        <action id="edit"
+                                openType="DIALOG"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="bank"/>
+                        <column id="bank.address"/>
+                        <column id="maxAmount"
+                                editable="true"/>
+                        <column id="state"
+                                editable="true"
+                                optionsDatasource="suitableBankStatesDs"/>
+                        <column id="comment"
+                                maxTextLength="20"/>
+                        <column id="updateTs"
+                                caption="msg://updateTime"/>
+                    </columns>
+                    <rows datasource="suitableBanksDs"/>
+                    <buttonsPanel>
+                        <button action="suitableBanksTable.create"
+                                caption="msg://addSuitableBankButton"/>
+                        <button action="suitableBanksTable.edit"/>
+                        <button action="suitableBanksTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+        </scrollBox>
+        <hbox id="hbox"
+              spacing="true">
+            <frame id="windowActions"
+                   screen="editWindowActions"/>
+            <button id="reportButton"
+                    caption="msg://onPrint"/>
+        </hbox>
+    </layout>
+</window>

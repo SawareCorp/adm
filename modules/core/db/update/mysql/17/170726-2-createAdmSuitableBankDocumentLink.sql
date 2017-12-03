@@ -1,0 +1,2 @@
+alter table ADM_SUITABLE_BANK_DOCUMENT_LINK add constraint FK_ASBDL_DOCUMENT foreign key (DOCUMENT_ID) references ADM_DOCUMENT(ID);
+alter table ADM_SUITABLE_BANK_DOCUMENT_LINK add constraint FK_ASBDL_SUITABLE_BANK foreign key (SUITABLE_BANK_ID) references ADM_SUITABLE_BANK(ID);

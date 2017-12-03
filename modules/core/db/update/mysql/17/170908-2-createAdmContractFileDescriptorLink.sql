@@ -1,0 +1,2 @@
+alter table ADM_CONTRACT_FILE_DESCRIPTOR_LINK add constraint FK_ACTFDL_CONTRACT foreign key (CONTRACT_ID) references ADM_CONTRACT(ID);
+alter table ADM_CONTRACT_FILE_DESCRIPTOR_LINK add constraint FK_ACTFDL_FILE_DESCRIPTOR foreign key (FILE_DESCRIPTOR_ID) references SYS_FILE(ID);

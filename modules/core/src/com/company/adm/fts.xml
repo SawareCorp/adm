@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fts-config xmlns="http://schemas.haulmont.com/cuba/fts.xsd">
+    <entities>
+        <entity class="com.company.adm.entity.Contact">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.Bank">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.Ticket">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.Interest">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.Contractor">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.Contract">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.Service">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.ServiceStatus">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.ContractServiceLine">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.Comment">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.analytics.SuitableBank">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.analytics.Document">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.analytics.Analytics">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.scheduler.CustomScheduler">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.SourceDescription">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.analytics.BankTicketLine">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.Questionnaire">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.CurrentLoan">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.SourceOfIncome">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.TicketState">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.contracts.analytics.SuitableBankState">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.adm.entity.SmsTemplate">
+            <include re=".*"/>
+        </entity>
+    </entities>
+</fts-config>

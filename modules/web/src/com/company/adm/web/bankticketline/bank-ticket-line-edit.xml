@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.adm.web.bankticketline.BankTicketLineEdit"
+        datasource="bankTicketLineDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.adm.web.bankticketline">
+    <dsContext>
+        <datasource id="bankTicketLineDs"
+                    class="com.company.adm.entity.contracts.analytics.BankTicketLine"
+                    view="bankTicketLine-view"/>
+        <collectionDatasource id="banksDs"
+                              class="com.company.adm.entity.Bank"
+                              view="bank-view">
+            <query>
+                <![CDATA[select e from adm$Bank e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="245"
+                width="400"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="bankTicketLineDs">
+            <column width="250px">
+                <field optionsDatasource="banksDs"
+                       property="bank"/>
+                <field property="applicationDate"/>
+                <field property="comment"
+                       rows="2"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

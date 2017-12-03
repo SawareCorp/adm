@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.suitablebank.SuitableBankBrowse"
+        focusComponent="suitableBanksTable"
+        lookupComponent="suitableBanksTable"
+        messagesPack="com.company.adm.web.suitablebank">
+    <dsContext>
+        <groupDatasource id="suitableBanksDs"
+                         class="com.company.adm.entity.contracts.analytics.SuitableBank"
+                         view="suitableBank-view">
+            <query>
+                <![CDATA[select e from adm$SuitableBank e where e.analytics.contract.contractStatus = 1]]>
+            </query>
+        </groupDatasource>
+        <collectionDatasource id="suitableBankStatesDs"
+                              class="com.company.adm.entity.contracts.analytics.SuitableBankState"
+                              view="_local">
+            <query>
+                <![CDATA[select e from adm$SuitableBankState e order by e.position]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="suitableBanksTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="suitableBanksTable"
+                datasource="suitableBanksDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="suitableBanksTable"
+                    editable="true"
+                    width="100%">
+            <actions>
+                <action id="edit"
+                        invoke="onEdit"/>
+                <action id="remove"/>
+                <action id="refresh"/>
+                <action id="excel"/>
+            </actions>
+            <columns>
+                <group>
+                    <column id="analytics.contract.contractor.name"
+                            caption="msg://contractorName"/>
+                </group>
+                <column id="bank"/>
+                <column id="state"
+                        editable="true"
+                        optionsDatasource="suitableBankStatesDs"/>
+                <column id="comment"
+                        maxTextLength="40"/>
+            </columns>
+            <rows datasource="suitableBanksDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="removeBtn"
+                        action="suitableBanksTable.remove"/>
+                <button id="refreshButton"
+                        action="suitableBanksTable.refresh"/>
+                <button id="excelButton"
+                        action="suitableBanksTable.excel"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

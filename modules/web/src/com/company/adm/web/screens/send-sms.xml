@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.adm.web.screens.SendSms"
+        messagesPack="com.company.adm.web.screens">
+    <dsContext>
+        <collectionDatasource id="smsTemplatesDs"
+                              allowCommit="false"
+                              class="com.company.adm.entity.SmsTemplate"
+                              view="_local">
+            <query>
+                <![CDATA[select e from adm$SmsTemplate e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode modal="true"
+                width="400"/>
+    <layout expand="buttonsPanel"
+            spacing="true">
+        <vbox id="vbox"
+              spacing="true">
+            <lookupField id="templateChooser"
+                         caption="Выберите шаблон"
+                         optionsDatasource="smsTemplatesDs"/>
+            <textArea id="messageField"
+                      caption="Текст сообщения"
+                      width="100%"/>
+        </vbox>
+        <buttonsPanel id="buttonsPanel"
+                      align="TOP_CENTER"
+                      width="100%">
+            <button id="sendSmsButton"
+                    caption="Отправить"
+                    invoke="onSendSmsButtonClick"/>
+            <button id="cancelButton"
+                    align="TOP_RIGHT"
+                    caption="Отменить"
+                    invoke="onCancelButtonClick"/>
+        </buttonsPanel>
+    </layout>
+</window>

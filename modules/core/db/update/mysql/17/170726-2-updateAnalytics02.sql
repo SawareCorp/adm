@@ -1,0 +1,2 @@
+alter table ADM_ANALYTICS add constraint FK_ADM_ANALYTICS_SERVICE foreign key (SERVICE_ID) references ADM_SERVICE(ID);
+create index IDX_ADM_ANALYTICS_SERVICE on ADM_ANALYTICS (SERVICE_ID);

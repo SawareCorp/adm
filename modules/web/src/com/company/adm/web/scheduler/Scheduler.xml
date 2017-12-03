@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://schedulerMainCaption"
+        class="com.company.adm.web.scheduler.Scheduler"
+        messagesPack="com.company.adm.web.scheduler">
+    <dsContext>
+        <collectionDatasource id="ticketCallsDs"
+                              class="com.company.adm.entity.Ticket"
+                              view="ticket-view">
+            <query>
+                <![CDATA[select e from adm$Ticket e where 
+cast(e.statusDateTime date) = cast(:component$dateField date)
+and e.responsibleManager.id in :component$managerField
+and e.statusDateTime is not null]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="customSchedulersTicketsDs"
+                              class="com.company.adm.entity.scheduler.CustomScheduler"
+                              view="customScheduler-view">
+            <query>
+                <![CDATA[select e from adm$CustomScheduler e where 
+(cast(e.date date) = cast(:component$dateField date) 
+or (cast(e.date date) < cast(:component$dateField date) 
+and e.workedOut <> 1))
+and e.ticket is not null 
+and e.ticket.responsibleManager.id in :component$managerField]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="customSchedulersContractDs"
+                              class="com.company.adm.entity.scheduler.CustomScheduler"
+                              view="customScheduler-view">
+            <query>
+                <![CDATA[select e from adm$CustomScheduler e where 
+(cast(e.date date) = cast(:component$dateField date) 
+or (cast(e.date date) < cast(:component$dateField date) 
+and e.workedOut <> 1)) 
+and e.contract.responsibleManager.id in :component$managerField 
+and e.contract is not null]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="usersDs"
+                              class="com.haulmont.cuba.security.entity.User"
+                              view="_local">
+            <query>
+                <![CDATA[select e from sec$User e 
+where 
+e.login <> 'admin'
+and
+e.login <> 'anonymous']]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="contractsDs"
+                              class="com.company.adm.entity.contracts.Contract"
+                              view="contract-view">
+            <query>
+                <![CDATA[select e from adm$Contract e where 
+cast(e.eventTime date) = cast(:component$dateField date)
+and e.responsibleManager.id in :component$managerField
+and e.eventTime is not null]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox">
+        <hbox spacing="true"
+              width="100%">
+            <vbox spacing="true">
+                <dateField id="dateField"
+                           caption="msg://dateLabel"
+                           dateFormat="dd.MM.yyyy"
+                           width="200px"/>
+                <groupBox caption="msg://managerField"
+                          collapsable="true"
+                          collapsed="true">
+                    <optionsGroup id="managerField"
+                                  multiselect="true"
+                                  optionsDatasource="usersDs"/>
+                </groupBox>
+            </vbox>
+            <vbox spacing="true">
+                <button id="reportButton"
+                        align="TOP_RIGHT"
+                        caption="Печать"
+                        icon="icons/reports-print.png"
+                        invoke="onReportButtonClick"/>
+                <button id="refreshButton"
+                        align="TOP_RIGHT"
+                        caption="msg://refreshCaption"
+                        invoke="onRefreshButtonClick"/>
+            </vbox>
+        </hbox>
+        <scrollBox id="scrollBox">
+            <groupBox id="ticketsGroupBox"
+                      caption="msg://meetsTableLabel"
+                      spacing="true">
+                <table id="ticketsTable"
+                       width="100%">
+                    <actions>
+                        <action id="edit"/>
+                    </actions>
+                    <columns>
+                        <column id="name"/>
+                        <column id="phone"/>
+                        <column id="status"/>
+                        <column id="statusDateTime"/>
+                        <column id="lastCall"/>
+                        <column id="lastMeeting"/>
+                        <column id="characteristic"
+                                maxTextLength="20"/>
+                        <column id="face"/>
+                        <column id="responsibleManager"
+                                maxTextLength="30"/>
+                    </columns>
+                    <rows datasource="ticketCallsDs"/>
+                </table>
+            </groupBox>
+            <groupBox id="contractsGroupBox"
+                      caption="msg://contractsTableCaption"
+                      spacing="true">
+                <table id="contractsTable"
+                       height="100px"
+                       width="100%">
+                    <actions>
+                        <action id="edit"/>
+                    </actions>
+                    <columns>
+                        <column id="contractNumber"/>
+                        <column id="contractor.name"/>
+                        <column id="contractor.phone"/>
+                        <column id="contractEvent"/>
+                        <column id="eventTime"/>
+                        <column id="createDate"/>
+                        <column id="direction"/>
+                        <column id="amount"/>
+                        <column id="desiredAmount"/>
+                    </columns>
+                    <rows datasource="contractsDs"/>
+                </table>
+            </groupBox>
+            <groupBox id="customsGroupBox"
+                      caption="msg://customsTableLabel"
+                      orientation="horizontal"
+                      spacing="true"
+                      width="100%">
+                <table id="customSchedulersTicketsTable"
+                       editable="true"
+                       width="100%">
+                    <actions>
+                        <action id="edit"
+                                invoke="onEdit"/>
+                    </actions>
+                    <columns>
+                        <column id="date"/>
+                        <column id="ticket.name"
+                                caption="msg://ticketName"/>
+                        <column id="workedOut"
+                                editable="true"/>
+                        <column id="comment"
+                                caption="msg://commentLabel"
+                                maxTextLength="15"/>
+                        <column id="ticket.responsibleManager"
+                                caption="msg://responsibleManagerCaption"
+                                maxTextLength="20"/>
+                    </columns>
+                    <rows datasource="customSchedulersTicketsDs"/>
+                </table>
+                <table id="customSchedulersContractTable"
+                       editable="true"
+                       width="100%">
+                    <actions>
+                        <action id="edit"
+                                invoke="onEdit"/>
+                    </actions>
+                    <columns>
+                        <column id="date"/>
+                        <column id="contract.contractor.name"
+                                caption="msg://contractName"/>
+                        <column id="workedOut"
+                                editable="true"/>
+                        <column id="comment"
+                                caption="msg://commentLabel"
+                                maxTextLength="15"/>
+                        <column id="contract.responsibleManager"
+                                caption="msg://responsibleManagerCaption"/>
+                    </columns>
+                    <rows datasource="customSchedulersContractDs"/>
+                </table>
+            </groupBox>
+        </scrollBox>
+    </layout>
+</window>
