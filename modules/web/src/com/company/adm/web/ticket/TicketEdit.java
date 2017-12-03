@@ -108,12 +108,11 @@ public class TicketEdit extends AbstractEditor<Ticket> {
 
     @Override
     protected void postInit() {
+        //Устанавливаем действие для кнопки отчетов
         reportsButton.setAction(new EditorPrintFormAction("report", this, String.format("Карточка заявки %s", getItem().getName() != null ? getItem().getName() : "")));
         ((EditorPrintFormAction) reportsButton.getAction()).setBeforeActionPerformedHandler(() -> commit());
-
         if (getItem().getQuestionnaire() == null)
             getItem().setQuestionnaire(metadata.create(Questionnaire.class));
-
     }
 
     public void onCreateContract(Component source) {
