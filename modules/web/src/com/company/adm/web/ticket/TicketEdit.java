@@ -82,11 +82,11 @@ public class TicketEdit extends AbstractEditor<Ticket> {
      */
     @Override
     public void init(Map<String, Object> params) {
+        //Просто коммент
         nameField.setResizable(true);
         characteristicField.setResizable(true);
         interestField.removeAllActions();
         interestField.addLookupAction();
-
         statusField.addValueChangeListener(e -> {
             if (!((TicketState) e.getValue()).getHasDateTime()) {
                 getItem().setStatusDateTime(null);
