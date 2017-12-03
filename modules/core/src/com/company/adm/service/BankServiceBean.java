@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.List;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service(BankService.NAME)
 public class BankServiceBean implements BankService {
     @Inject
