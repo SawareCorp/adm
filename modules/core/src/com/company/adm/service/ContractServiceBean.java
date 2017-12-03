@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import java.io.FileDescriptor;
 import java.util.List;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service(ContractService.NAME)
 public class ContractServiceBean implements ContractService {
     @Inject
