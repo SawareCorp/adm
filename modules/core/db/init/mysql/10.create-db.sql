@@ -344,7 +344,7 @@ create table ADM_QUESTIONNAIRE (
     LITIGATIONS varchar(255),
     DEBT_OF_BEILIFFS varchar(255),
     UNDERAGE_CHILDREN varchar(255),
-    CREDIT_AMOUNT bigint,
+    CREDIT_AMOUNT varchar(255),
     CREDIT_TERM varchar(255),
     GUARANTORS varchar(255),
     --

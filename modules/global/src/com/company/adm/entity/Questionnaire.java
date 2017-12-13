@@ -87,7 +87,7 @@ public class Questionnaire extends BaseUuidEntity implements Versioned, Updatabl
     protected Set<SourceOfIncome> incomes;
 
     @Column(name = "CREDIT_AMOUNT")
-    protected Long creditAmount;
+    protected String creditAmount;
 
     @Column(name = "CREDIT_TERM")
     protected String creditTerm;
@@ -110,6 +110,15 @@ public class Questionnaire extends BaseUuidEntity implements Versioned, Updatabl
 
     @Column(name = "CREATED_BY", length = 50)
     protected String createdBy;
+    public String getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(String creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+
 
     public Set<BankTicketLine> getBankTickets() {
         return bankTickets;
@@ -148,13 +157,7 @@ public class Questionnaire extends BaseUuidEntity implements Versioned, Updatabl
     }
 
 
-    public void setCreditAmount(Long creditAmount) {
-        this.creditAmount = creditAmount;
-    }
 
-    public Long getCreditAmount() {
-        return creditAmount;
-    }
 
     public void setCreditTerm(String creditTerm) {
         this.creditTerm = creditTerm;

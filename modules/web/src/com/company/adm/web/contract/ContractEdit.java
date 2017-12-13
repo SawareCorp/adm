@@ -205,7 +205,7 @@ public class ContractEdit extends AbstractEditor<Contract> {
         reportAnalytic.setUseResponsePending(true);
 
         contractorField.addValueChangeListener(e -> {
-            if(getItem().getQuestionnaire() != null){
+            if (getItem().getQuestionnaire() != null) {
                 questionnaireDs.getItem().setName(getItem().getContractor().getName());
                 questionnaireDs.getItem().setPhone(getItem().getContractor().getPhone());
             }
@@ -387,9 +387,9 @@ public class ContractEdit extends AbstractEditor<Contract> {
             try {
                 amount += Long.valueOf(line.getCost());
             } catch (NumberFormatException e) {
-                e.printStackTrace();
             }
         }
+
         getItem().setAmount(amount);
     }
 
@@ -485,12 +485,12 @@ public class ContractEdit extends AbstractEditor<Contract> {
     }
 
     public void onAddCommentButtonClick() {
-        if(newCommentText.getValue() == null)
+        if (newCommentText.getValue() == null)
             return;
         Comment comment = metadata.create(Comment.class);
         comment.setDateTime(new Date());
         User currentUser = userSession.getUser();
-        if(currentUser == null){
+        if (currentUser == null) {
             showNotification("Ошибка при добавлении комментария", "Пользователь не определен", NotificationType.ERROR);
             return;
         }

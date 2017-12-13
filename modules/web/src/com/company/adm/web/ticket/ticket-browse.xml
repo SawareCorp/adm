@@ -37,7 +37,6 @@
             <columns>
                 <column id="name"/>
                 <column id="interest"/>
-                <column id="phone"/>
                 <column id="source"/>
                 <column id="sourceDescription"/>
                 <column id="status"/>

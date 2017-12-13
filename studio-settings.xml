@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <studio>
     <screenDesigner>
+        <screen layoutAnalysisDisabled="true"
+                module="web"
+                reference="com/company/adm/web/scheduler/Scheduler.xml"/>
+        <screen layoutAnalysisDisabled="true"
+                module="web"
+                reference="com/company/adm/web/ticket/ticket-browse.xml"/>
+        <screen layoutAnalysisDisabled="true"
+                module="web"
+                reference="com/company/adm/web/analytics/analytics-edit.xml"/>
     </screenDesigner>
 </studio>

@@ -54,13 +54,13 @@
                 </fieldGroup>
                 <fieldGroup id="analyticsFieldGroup"
                             datasource="analyticsDs">
-                    <column width="250px">
+                    <column width="375px">
                         <field property="currentCredits"/>
                         <field property="monthlyPayments"/>
                         <field property="arrears"/>
                         <field property="securityCheck"/>
                         <field property="comment"
-                               rows="2"/>
+                               rows="3"/>
                     </column>
                 </fieldGroup>
             </hbox>

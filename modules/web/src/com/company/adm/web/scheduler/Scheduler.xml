@@ -94,26 +94,32 @@ and e.eventTime is not null]]>
             <groupBox id="ticketsGroupBox"
                       caption="msg://meetsTableLabel"
                       spacing="true">
-                <table id="ticketsTable"
-                       width="100%">
+                <dataGrid datasource="ticketCallsDs"
+                          width="100%">
                     <actions>
                         <action id="edit"/>
                     </actions>
                     <columns>
-                        <column id="name"/>
-                        <column id="phone"/>
-                        <column id="status"/>
-                        <column id="statusDateTime"/>
-                        <column id="lastCall"/>
-                        <column id="lastMeeting"/>
-                        <column id="characteristic"
-                                maxTextLength="20"/>
-                        <column id="face"/>
-                        <column id="responsibleManager"
-                                maxTextLength="30"/>
+                        <column minimumWidth="250"
+                                property="name"/>
+                        <column editable="false"
+                                maximumWidth="170"
+                                minimumWidth="120"
+                                property="status"/>
+                        <column maximumWidth="200"
+                                minimumWidth="135"
+                                property="statusDateTime"/>
+                        <column editable="false"
+                                maximumWidth="470"
+                                minimumWidth="200"
+                                property="interest"/>
+                        <column caption="Отв. Менеджер"
+                                editable="false"
+                                maximumWidth="300"
+                                minimumWidth="120"
+                                property="responsibleManager"/>
                     </columns>
-                    <rows datasource="ticketCallsDs"/>
-                </table>
+                </dataGrid>
             </groupBox>
             <groupBox id="contractsGroupBox"
                       caption="msg://contractsTableCaption"
@@ -127,13 +133,9 @@ and e.eventTime is not null]]>
                     <columns>
                         <column id="contractNumber"/>
                         <column id="contractor.name"/>
-                        <column id="contractor.phone"/>
                         <column id="contractEvent"/>
                         <column id="eventTime"/>
-                        <column id="createDate"/>
-                        <column id="direction"/>
-                        <column id="amount"/>
-                        <column id="desiredAmount"/>
+                        <column id="responsibleManager"/>
                     </columns>
                     <rows datasource="contractsDs"/>
                 </table>

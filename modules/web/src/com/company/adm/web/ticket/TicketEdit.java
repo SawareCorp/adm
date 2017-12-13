@@ -71,6 +71,10 @@ public class TicketEdit extends AbstractEditor<Ticket> {
     private AdmConfig admConfig;
     @Inject
     private Datasource<Ticket> ticketDs;
+    @Inject
+    private CollectionDatasource<Contract, UUID> contractsDs;
+    @Inject
+    private GroupBoxLayout contractsBox;
 
     /**
      * Called by the framework after creation of all components and before showing the screen.
@@ -113,6 +117,10 @@ public class TicketEdit extends AbstractEditor<Ticket> {
         ((EditorPrintFormAction) reportsButton.getAction()).setBeforeActionPerformedHandler(() -> commit());
         if (getItem().getQuestionnaire() == null)
             getItem().setQuestionnaire(metadata.create(Questionnaire.class));
+        contractsDs.refresh();
+        if (contractsDs.getItems().size()==0)
+            contractsBox.setVisible(false);
+
     }
 
     public void onCreateContract(Component source) {
