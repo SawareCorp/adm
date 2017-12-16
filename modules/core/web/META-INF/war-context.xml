@@ -1,18 +1,14 @@
 <Context>
-
     <!-- Database connection -->
-    <Resource
-      name="jdbc/CubaDS"
-      type="javax.sql.DataSource"
-      maxTotal="20"
-      maxIdle="2"
-      maxWaitMillis="5000"
-      driverClassName="com.mysql.jdbc.Driver"
-      url="jdbc:mysql://localhost/adm"
-      username="adm"
-      password="AdmUserPa$$w0rd"/>
-
+    <Resource driverClassName="com.mysql.jdbc.Driver"
+              maxIdle="2"
+              maxTotal="20"
+              maxWaitMillis="5000"
+              name="jdbc/CubaDS"
+              password="20071995"
+              type="javax.sql.DataSource"
+              url="jdbc:mysql://db/adm"
+              username="adm"/>
     <!-- Switch off session serialization -->
     <Manager pathname=""/>
-
 </Context>

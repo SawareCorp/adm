@@ -44,6 +44,8 @@ public class Scheduler extends AbstractWindow {
     private CollectionDatasource<User, UUID> usersDs;
     @Inject
     private DataService dataService;
+    @Inject
+    private DataGrid<Ticket> ticketCallsDataGrid;
     private ReportGuiManager reportGuiManager = AppBeans.get(ReportGuiManager.class);
 
     /**
@@ -56,8 +58,6 @@ public class Scheduler extends AbstractWindow {
      */
     @Override
     public void init(Map<String, Object> params) {
-        //reportButton.setAction(new RunReportAction("report"));
-
         dateField.addValueChangeListener(e -> refreshDataSources());
         managerField.addValueChangeListener(e -> refreshDataSources());
         customSchedulersTicketsDs.addItemPropertyChangeListener(e -> customSchedulersTicketsDs.commit());
@@ -67,18 +67,20 @@ public class Scheduler extends AbstractWindow {
         managerField.setValue(usersDs.getItems());
     }
 
-
     private void refreshDataSources() {
         ticketCallsDs.refresh();
         contractsDs.refresh();
         customSchedulersContractDs.refresh();
         customSchedulersTicketsDs.refresh();
+
+        Double ticketsCallsTableHeight = (ticketCallsDs.getItems().size() == 0 ? 3 : ticketCallsDs.getItems().size() + 1) * 31.1167;
+        ticketCallsDataGrid.setHeight(ticketsCallsTableHeight.toString());
     }
 
     public void onEdit(Component source) {
-        if(source == customSchedulersTicketsTable)
+        if (source == customSchedulersTicketsTable)
             openEditor(customSchedulersTicketsDs.getItem().getTicket(), WindowManager.OpenType.THIS_TAB);
-        else if(source == customSchedulersContractTable)
+        else if (source == customSchedulersContractTable)
             openEditor(customSchedulersContractDs.getItem().getContract(), WindowManager.OpenType.THIS_TAB);
     }
 

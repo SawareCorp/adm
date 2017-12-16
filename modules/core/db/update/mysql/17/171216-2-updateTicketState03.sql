@@ -1,0 +1,1 @@
+create unique index IDX_ADM_TICKET_STATE_UNQ_NAME on ADM_TICKET_STATE (NAME) ;

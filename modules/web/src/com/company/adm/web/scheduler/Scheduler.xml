@@ -94,13 +94,15 @@ and e.eventTime is not null]]>
             <groupBox id="ticketsGroupBox"
                       caption="msg://meetsTableLabel"
                       spacing="true">
-                <dataGrid datasource="ticketCallsDs"
+                <dataGrid id="ticketCallsDataGrid"
+                          datasource="ticketCallsDs"
                           width="100%">
                     <actions>
                         <action id="edit"/>
                     </actions>
                     <columns>
-                        <column minimumWidth="250"
+                        <column id="name"
+                                minimumWidth="250"
                                 property="name"/>
                         <column editable="false"
                                 maximumWidth="170"
