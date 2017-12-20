@@ -17,8 +17,7 @@
             </query>
         </collectionDatasource>
     </dsContext>
-    <dialogMode height="245"
-                width="400"/>
+    <dialogMode width="400"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"

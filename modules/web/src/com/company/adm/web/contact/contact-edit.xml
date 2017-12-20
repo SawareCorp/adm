@@ -10,9 +10,7 @@
                     class="com.company.adm.entity.Contact"
                     view="_local"/>
     </dsContext>
-    <dialogMode height="235"
-                modal="true"
-                width="400"/>
+    <dialogMode width="400"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"

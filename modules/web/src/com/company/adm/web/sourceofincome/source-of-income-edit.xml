@@ -10,8 +10,7 @@
                     class="com.company.adm.entity.SourceOfIncome"
                     view="_local"/>
     </dsContext>
-    <dialogMode height="300"
-                width="440"/>
+    <dialogMode width="440"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"

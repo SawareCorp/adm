@@ -1,5 +1,6 @@
 package com.company.adm.listener;
 
+import com.company.adm.entity.CurrentLoan;
 import com.company.adm.entity.contracts.analytics.BankTicketLine;
 import com.company.adm.entity.contracts.analytics.SuitableBank;
 import com.haulmont.cuba.core.Persistence;
@@ -14,7 +15,7 @@ import com.haulmont.cuba.core.listener.BeforeInsertEntityListener;
 import com.haulmont.cuba.core.listener.BeforeUpdateEntityListener;
 
 @Component("adm_AnalyticsEntityListener")
-public class AnalyticsEntityListener implements BeforeDeleteEntityListener<Analytics>, BeforeInsertEntityListener<Analytics>, BeforeUpdateEntityListener<Analytics> {
+public class AnalyticsEntityListener implements BeforeDeleteEntityListener<Analytics> {
 
     @Override
     public void onBeforeDelete(Analytics entity, EntityManager entityManager) {
@@ -23,18 +24,10 @@ public class AnalyticsEntityListener implements BeforeDeleteEntityListener<Analy
 
         for (BankTicketLine ticketLine : entity.getTicketToBanks())
             entityManager.remove(ticketLine);
-    }
 
-
-    @Override
-    public void onBeforeInsert(Analytics entity, EntityManager entityManager) {
-
-    }
-
-
-    @Override
-    public void onBeforeUpdate(Analytics entity, EntityManager entityManager) {
-
+        if (entity.getCurrentLoans() != null)
+            for (CurrentLoan currentLoan : entity.getCurrentLoans())
+                entityManager.remove(currentLoan);
     }
 
 

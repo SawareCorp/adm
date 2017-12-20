@@ -10,8 +10,7 @@
                     class="com.company.adm.entity.CurrentLoan"
                     view="_local"/>
     </dsContext>
-    <dialogMode height="300"
-                width="480"/>
+    <dialogMode width="480"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"

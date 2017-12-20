@@ -44,21 +44,8 @@ public class ContractBrowse extends AbstractLookup {
     @Override
     public void ready() {
         contractsTableRemove.setBeforeActionPerformedHandler(() -> {
-            Contract contract = contractsTable.getSingleSelected();
-            if(contract.getAnalytics().size() > 0 ){
-                showNotification("Удаление невозможно! Сначала удалите связанные аналитики", NotificationType.ERROR);
-                return false;
-            }else if(contract.getHistory().size() > 0){
-                showNotification("Удаление невозможно! Сначала удалите связанные комментарии", NotificationType.ERROR);
-                return false;
-            }else if(contract.getServices().size() > 0){
-                showNotification("Удаление невозможно! Сначала удалите связанные услуги", NotificationType.ERROR);
-                return false;
-            }else if(contract.getInternalFiles().size() > 0){
-                showNotification("Удаление невозможно! Сначала удалите связанные файлы", NotificationType.ERROR);
-                return false;
-            }
-            return true;
+            showNotification("Возможность удаления отключена по просьбе Староверова А.О.", NotificationType.ERROR);
+            return false;
         });
     }
 }

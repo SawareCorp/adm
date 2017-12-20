@@ -10,8 +10,7 @@
                     class="com.company.adm.entity.contracts.Service"
                     view="service-view"/>
     </dsContext>
-    <dialogMode height="200"
-                width="500"/>
+    <dialogMode width="500"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"
