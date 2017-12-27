@@ -3,9 +3,6 @@
     <screenDesigner>
         <screen layoutAnalysisDisabled="true"
                 module="web"
-                reference="com/company/adm/web/scheduler/Scheduler.xml"/>
-        <screen layoutAnalysisDisabled="true"
-                module="web"
                 reference="com/company/adm/web/ticket/ticket-browse.xml"/>
         <screen layoutAnalysisDisabled="true"
                 module="web"

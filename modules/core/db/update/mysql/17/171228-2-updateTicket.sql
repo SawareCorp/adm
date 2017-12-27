@@ -1,0 +1,2 @@
+update ADM_TICKET set SOURCE_DESCRIPTION_ID = '9f9fd4300a26e6015113473215ad6b05' where SOURCE_DESCRIPTION_ID is null ;
+alter table ADM_TICKET modify column SOURCE_DESCRIPTION_ID varchar(32) not null ;

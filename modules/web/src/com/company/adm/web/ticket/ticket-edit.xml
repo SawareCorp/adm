@@ -63,7 +63,7 @@
         </collectionDatasource>
         <collectionDatasource id="contractsDs"
                               class="com.company.adm.entity.contracts.Contract"
-                              view="contract-view">
+                              view="contractOptForTicketEdit-view">
             <query>
                 <![CDATA[select e from adm$Contract e where e.ticket.id = :ds$ticketDs]]>
             </query>

@@ -6,7 +6,7 @@
     <dsContext>
         <collectionDatasource id="ticketCallsDs"
                               class="com.company.adm.entity.Ticket"
-                              view="ticket-view">
+                              view="ticketOpt-view">
             <query>
                 <![CDATA[select e from adm$Ticket e where 
 cast(e.statusDateTime date) = cast(:component$dateField date)
@@ -16,7 +16,7 @@ and e.statusDateTime is not null]]>
         </collectionDatasource>
         <collectionDatasource id="customSchedulersTicketsDs"
                               class="com.company.adm.entity.scheduler.CustomScheduler"
-                              view="customScheduler-view">
+                              view="customSchedulerTicketOpt-view">
             <query>
                 <![CDATA[select e from adm$CustomScheduler e where 
 (cast(e.date date) = cast(:component$dateField date) 
@@ -28,7 +28,7 @@ and e.ticket.responsibleManager.id in :component$managerField]]>
         </collectionDatasource>
         <collectionDatasource id="customSchedulersContractDs"
                               class="com.company.adm.entity.scheduler.CustomScheduler"
-                              view="customScheduler-view">
+                              view="customSchedulerContractOpt-view">
             <query>
                 <![CDATA[select e from adm$CustomScheduler e where 
 (cast(e.date date) = cast(:component$dateField date) 
@@ -51,7 +51,7 @@ e.login <> 'anonymous']]>
         </collectionDatasource>
         <collectionDatasource id="contractsDs"
                               class="com.company.adm.entity.contracts.Contract"
-                              view="contract-view">
+                              view="contractOpt-view">
             <query>
                 <![CDATA[select e from adm$Contract e where 
 cast(e.eventTime date) = cast(:component$dateField date)

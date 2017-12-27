@@ -8,7 +8,7 @@
     <dsContext>
         <groupDatasource id="contractsDs"
                          class="com.company.adm.entity.contracts.Contract"
-                         view="contract-view">
+                         view="contractOptBrowser-view">
             <query>
                 <![CDATA[select e from adm$Contract e]]>
             </query>
@@ -35,6 +35,8 @@
                 <column id="contractNumber"/>
                 <column id="contractor"/>
                 <column id="contractStatus"/>
+                <column id="contractEvent"/>
+                <column id="eventTime"/>
                 <column id="direction"/>
                 <column id="amount"/>
                 <column id="createDate"/>

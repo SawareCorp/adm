@@ -4,6 +4,7 @@ import com.company.adm.entity.contracts.analytics.SuitableBank;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.AbstractLookup;
 import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.components.Filter;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.data.GroupDatasource;
 
@@ -17,6 +18,7 @@ public class SuitableBankBrowse extends AbstractLookup {
     @Inject
     private GroupTable<SuitableBank> suitableBanksTable;
 
+
     /**
      * Called by the framework after creation of all components and before showing the screen.
      * <br> Override this method and put initialization logic here.
@@ -28,6 +30,7 @@ public class SuitableBankBrowse extends AbstractLookup {
     @Override
     public void init(Map<String, Object> params) {
         suitableBanksDs.addItemPropertyChangeListener(e -> e.getDs().commit());
+
     }
 
     public void onEdit(Component source) {

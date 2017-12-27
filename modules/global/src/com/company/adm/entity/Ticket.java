@@ -57,8 +57,9 @@ public class Ticket extends BaseUuidEntity implements Versioned, Updatable, Crea
     @Column(name = "SOURCE", nullable = false)
     protected Integer source;
 
+    @NotNull
     @Lookup(type = LookupType.DROPDOWN)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SOURCE_DESCRIPTION_ID")
     protected SourceDescription sourceDescription;
 

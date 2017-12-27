@@ -281,4 +281,89 @@
         <property name="currentLoans"
                   view="_local"/>
     </view>
+    <view class="com.company.adm.entity.Ticket"
+          extends="_minimal"
+          name="ticketOpt-view">
+        <property name="interest"
+                  view="_minimal"/>
+        <property name="source"/>
+        <property name="status"
+                  view="_minimal"/>
+        <property name="statusDateTime"/>
+        <property name="responsibleManager"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.adm.entity.scheduler.CustomScheduler"
+          extends="_local"
+          name="customSchedulerTicketOpt-view">
+        <property name="ticket"
+                  view="_minimal">
+            <property name="responsibleManager"
+                      view="_minimal"/>
+        </property>
+    </view>
+    <view class="com.company.adm.entity.scheduler.CustomScheduler"
+          extends="_local"
+          name="customSchedulerContractOpt-view">
+        <property name="contract"
+                  view="_minimal">
+            <property name="responsibleManager"
+                      view="_minimal"/>
+        </property>
+    </view>
+    <view class="com.company.adm.entity.contracts.Contract"
+          extends="_minimal"
+          name="contractOpt-view">
+        <property name="responsibleManager"
+                  view="_minimal"/>
+        <property name="contractEvent"/>
+        <property name="eventTime"/>
+    </view>
+    <view class="com.company.adm.entity.Ticket"
+          extends="_minimal"
+          name="ticketOptBrowser-view"
+          systemProperties="true">
+        <property name="interest"
+                  view="_minimal"/>
+        <property name="sourceDescription"
+                  view="_minimal"/>
+        <property name="status"
+                  view="_minimal"/>
+        <property name="statusDateTime"/>
+        <property name="lastCall"/>
+        <property name="lastMeeting"/>
+        <property name="responsibleManager"
+                  view="_minimal"/>
+        <property name="characteristic"/>
+        <property name="face"/>
+        <property name="source"/>
+    </view>
+    <view class="com.company.adm.entity.contracts.Contract"
+          extends="_minimal"
+          name="contractOptBrowser-view"
+          systemProperties="true">
+        <property name="contractStatus"/>
+        <property name="direction"/>
+        <property name="amount"/>
+        <property name="createDate"/>
+        <property name="responsibleManager"
+                  view="_minimal"/>
+        <property name="source"
+                  view="_minimal"/>
+        <property name="contractEvent"/>
+        <property name="eventTime"/>
+        <property name="ticket"
+                  view="_minimal">
+            <property name="source"/>
+        </property>
+    </view>
+    <view class="com.company.adm.entity.contracts.Contract"
+          extends="_minimal"
+          name="contractOptForTicketEdit-view">
+        <property name="contractStatus"/>
+        <property name="direction"/>
+        <property name="compensation"/>
+        <property name="amount"/>
+        <property name="createDate"/>
+    </view>
 </views>

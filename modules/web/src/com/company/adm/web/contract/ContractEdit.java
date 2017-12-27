@@ -131,6 +131,8 @@ public class ContractEdit extends AbstractEditor<Contract> {
     private UserSession userSession;
     @Inject
     private Datasource<Questionnaire> questionnaireDs;
+    @Named("fieldGroup.desiredAmount")
+    private TextField desiredAmountField;
     private Ticket sourceTicket;
 
 
@@ -299,6 +301,8 @@ public class ContractEdit extends AbstractEditor<Contract> {
             contract.setCreateDate(new Date());
         }
         servicesDs.addCollectionChangeListener(collectionChangeEvent -> calculateAmount());
+        servicesDs.addItemPropertyChangeListener(e -> calculateAmount());
+        desiredAmountField.addValueChangeListener(e -> calculateAmount());
         contractorField.addValueChangeListener(event -> {
             if (event.getValue() != null) {
                 newContractorVbox.setVisible(false);
@@ -388,6 +392,31 @@ public class ContractEdit extends AbstractEditor<Contract> {
                 amount += Long.valueOf(line.getCost());
             } catch (NumberFormatException e) {
             }
+        }
+
+        try {
+            Integer tempDesire = Integer.valueOf(getItem().getDesiredAmount());
+            if (tempDesire < 1100000)
+                amount += tempDesire * 0.1;
+            else if (tempDesire < 2000001)
+                amount += tempDesire * 0.09;
+            else if (tempDesire < 4000001)
+                amount += tempDesire * 0.08;
+            else if (tempDesire < 6000001)
+                amount += tempDesire * 0.07;
+            else if (tempDesire < 8000001)
+                amount += tempDesire * 0.06;
+            else if (tempDesire < 12000000)
+                amount += tempDesire * 0.05;
+            else if (tempDesire < 16000000)
+                amount += tempDesire * 0.04;
+            else if (tempDesire >= 16000000)
+                amount += tempDesire * 0.03;
+
+
+        } catch (Exception e) {
+
+
         }
 
         getItem().setAmount(amount);

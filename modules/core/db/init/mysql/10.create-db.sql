@@ -45,7 +45,7 @@ create table ADM_TICKET (
     PHONE varchar(20) not null,
     INTEREST_ID varchar(32),
     SOURCE integer not null,
-    SOURCE_DESCRIPTION_ID varchar(32),
+    SOURCE_DESCRIPTION_ID varchar(32) not null,
     AMOUNT varchar(255),
     STATUS_ID varchar(32) not null,
     STATUS_DATE_TIME datetime(3),

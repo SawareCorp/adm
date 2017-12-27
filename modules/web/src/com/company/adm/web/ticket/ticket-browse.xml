@@ -8,7 +8,7 @@
     <dsContext>
         <groupDatasource id="ticketsDs"
                          class="com.company.adm.entity.Ticket"
-                         view="ticket-view">
+                         view="ticketOptBrowser-view">
             <query>
                 <![CDATA[select e from adm$Ticket e order by e.createTs desc]]>
             </query>
