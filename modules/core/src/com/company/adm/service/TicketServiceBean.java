@@ -344,6 +344,10 @@ public class TicketServiceBean implements TicketService {
                 .replaceAll("\\(", "")
                 .replaceAll("\\)", "")
                 .replaceAll("-", "");
+        text = text
+                .replaceAll("\r", " ")
+                .replaceAll("\n", " ")
+                .replaceAll("  ", " ");
         try {
             Socket pingSocket = new Socket(admConfig.getPhoneIpAddress(), admConfig.getPhonePingPortNumber());
             pingSocket.close();
