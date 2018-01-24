@@ -96,7 +96,8 @@ order by e.serialNumber]]>
                                     <field optionsDatasource="contractorsDs"
                                            property="contractor"/>
                                     <field property="contractStatus"/>
-                                    <field property="direction"/>
+                                    <field property="direction"
+                                           visible="false"/>
                                     <field property="amount"/>
                                     <field property="createDate"/>
                                     <field optionsDatasource="responsibleManagersDs"

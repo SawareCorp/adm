@@ -127,7 +127,6 @@ and e.eventTime is not null]]>
                       caption="msg://contractsTableCaption"
                       spacing="true">
                 <table id="contractsTable"
-                       height="100px"
                        width="100%">
                     <actions>
                         <action id="edit"/>

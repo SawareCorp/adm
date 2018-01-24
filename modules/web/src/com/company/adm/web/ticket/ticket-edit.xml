@@ -109,9 +109,9 @@
                         <fieldGroup id="fieldGroup2"
                                     datasource="ticketDs">
                             <column width="310px">
-                                <field mask="8(###)###-##-##"
+                                <field mask="#(###)###-##-##"
                                        property="phone"
-                                       valueMode="masked"/>
+                                       valueMode="clear"/>
                                 <field property="eMail"/>
                                 <field property="lastCall"/>
                                 <field property="statusDateTime"/>
