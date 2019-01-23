@@ -3,12 +3,14 @@
     <screenDesigner>
         <screen layoutAnalysisDisabled="true"
                 module="web"
-                reference="com/company/adm/web/ticket/ticket-browse.xml"/>
-        <screen layoutAnalysisDisabled="true"
-                module="web"
                 reference="com/company/adm/web/analytics/analytics-edit.xml"/>
-        <screen layoutAnalysisDisabled="true"
-                module="web"
-                reference="com/company/adm/web/scheduler/Scheduler.xml"/>
     </screenDesigner>
+    <functionalitySettings>
+        <functionality id="oneToOneIndex"
+                       state="ENABLE"/>
+        <functionality id="joinedInheritanceDeleteCascade"
+                       state="ENABLE"/>
+        <functionality id="newFkConstraintNaming"
+                       state="ENABLE"/>
+    </functionalitySettings>
 </studio>

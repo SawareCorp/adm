@@ -115,6 +115,7 @@ create table ADM_CONTRACT (
     CREATED_BY varchar(50),
     --
     TICKET_ID varchar(32),
+    SIGNAL_ID bigint,
     CONTRACT_NUMBER bigint not null,
     CONTRACTOR_ID varchar(32) not null,
     CONTRACT_STATUS integer not null,

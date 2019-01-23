@@ -19,7 +19,10 @@
                 <collectionDatasource id="ticketToBanksDs"
                                       property="ticketToBanks"/>
                 <collectionDatasource id="suitableBanksDs"
-                                      property="suitableBanks"/>
+                                      property="suitableBanks">
+                    <collectionDatasource id="documentsDs"
+                                          property="documents"/>
+                </collectionDatasource>
                 <collectionDatasource id="analyticsCurrentLoansDs"
                                       property="currentLoans"/>
             </collectionDatasource>
@@ -70,6 +73,10 @@ order by e.serialNumber]]>
                 <![CDATA[select e from adm$SourceDescription e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="signalAlertsDs"
+                              allowCommit="false"
+                              class="com.company.crreps.entity.signals.SignalAlert"
+                              refreshMode="NEVER"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -96,8 +103,7 @@ order by e.serialNumber]]>
                                     <field optionsDatasource="contractorsDs"
                                            property="contractor"/>
                                     <field property="contractStatus"/>
-                                    <field property="direction"
-                                           visible="false"/>
+                                    <field property="direction"/>
                                     <field property="amount"/>
                                     <field property="createDate"/>
                                     <field optionsDatasource="responsibleManagersDs"
@@ -123,7 +129,7 @@ order by e.serialNumber]]>
                                            rows="2"/>
                                     <field mask="## ## ######"
                                            property="passport"
-                                           valueMode="masked"/>
+                                           valueMode="clear"/>
                                     <field property="issuingAuthority"/>
                                     <field property="issueDate"/>
                                     <field mask="###-###"
@@ -394,6 +400,39 @@ order by e.serialNumber]]>
                             caption="msg://addCommentButtonCaption"
                             invoke="onAddCommentButtonClick"/>
                 </hbox>
+            </tab>
+            <tab id="monitoringTab"
+                 caption="msg://monitoring"
+                 margin="true,false,false,false"
+                 spacing="true">
+                <vbox spacing="true">
+                    <buttonsPanel>
+                        <button id="goToSignalBtn"
+                                caption="msg://goToSignal"
+                                invoke="onGoToSignalBtnClick"/>
+                        <button id="addMonitorBtn"
+                                caption="msg://addToMonitor"
+                                invoke="onAddMonitorBtnClick"/>
+                    </buttonsPanel>
+                    <groupBox id="signalAlertsTableGBox"
+                              caption="msg://alertSignals"
+                              spacing="true">
+                        <table id="signalAlertsTable"
+                               contextMenuEnabled="false"
+                               height="100%"
+                               width="100%">
+                            <actions>
+                                <action id="edit"
+                                        trackSelection="true"/>
+                            </actions>
+                            <columns>
+                                <column id="shortDescription"/>
+                                <column id="dateTime"/>
+                            </columns>
+                            <rows datasource="signalAlertsDs"/>
+                        </table>
+                    </groupBox>
+                </vbox>
             </tab>
         </tabSheet>
         <hbox spacing="true">

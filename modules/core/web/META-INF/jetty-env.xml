@@ -7,8 +7,8 @@
         <Arg>
             <New class="org.apache.commons.dbcp2.BasicDataSource">
                 <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
-                <Set name="url">jdbc:mysql://10.10.1.50/adm</Set>
-                <Set name="username">aridg</Set>
+                <Set name="url">jdbc:mysql://188.127.237.21/adm</Set>
+                <Set name="username">adm</Set>
                 <Set name="password">20071995</Set>
                 <Set name="maxIdle">2</Set>
                 <Set name="maxTotal">20</Set>

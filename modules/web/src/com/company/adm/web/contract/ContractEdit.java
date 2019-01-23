@@ -5,15 +5,14 @@ import com.company.adm.entity.Questionnaire;
 import com.company.adm.entity.Ticket;
 import com.company.adm.entity.contracts.*;
 import com.company.adm.entity.contracts.analytics.Analytics;
-import com.company.adm.entity.contracts.analytics.BankTicketLine;
 import com.company.adm.entity.scheduler.CustomScheduler;
 import com.company.adm.service.AdmConfig;
 import com.company.adm.service.ContractService;
-import com.company.adm.service.UniqueNumbersExtService;
-import com.company.adm.web.contractor.ContractorEdit;
+import com.company.crreps.entity.signals.SignalAlert;
+import com.company.crreps.entity.signals.SignalObject;
+import com.company.crreps.exceptions.JsonParseException;
+import com.company.crreps.service.SignalsService;
 import com.haulmont.bali.util.ParamsMap;
-import com.haulmont.cuba.core.app.UniqueNumbersService;
-import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.WindowManager;
@@ -133,6 +132,10 @@ public class ContractEdit extends AbstractEditor<Contract> {
     private Datasource<Questionnaire> questionnaireDs;
     @Named("fieldGroup.desiredAmount")
     private TextField desiredAmountField;
+    @Named("tabSheet.monitoringTab")
+    private OrderedContainer monitoringTab;
+    @Inject
+    private TabSheet tabSheet;
     private Ticket sourceTicket;
 
 
@@ -348,6 +351,85 @@ public class ContractEdit extends AbstractEditor<Contract> {
                 directionField.setEditable(false);
             } else directionField.setEditable(true);
         });
+
+        if (contract.getContractor() != null) {
+            if (contract.getContractor().getFace() == Face.entity) {
+                tabSheet.getTab("").setVisible(false);
+                monitoringTab.setVisible(false);
+            } else getSignalsInfo();
+        }
+    }
+
+    @Inject
+    private Button addMonitorBtn;
+    @Inject
+    private Button goToSignalBtn;
+    @Inject
+    private GroupBoxLayout signalAlertsTableGBox;
+    @Inject
+    private SignalsService signalsService;
+    @Inject
+    private CollectionDatasource<SignalAlert, Long> signalAlertsDs;
+
+    private void getSignalsInfo() {
+        Long signalId = getItem().getSignalId();
+        if (signalId == null) {
+            addMonitorBtn.setEnabled(true);
+            goToSignalBtn.setEnabled(false);
+            signalAlertsTableGBox.setVisible(false);
+        } else {
+            try {
+                addMonitorBtn.setEnabled(false);
+                goToSignalBtn.setEnabled(true);
+                signalAlertsTableGBox.setVisible(true);
+
+                List<SignalAlert> signalAlerts = signalsService.getSignalAlerts(signalId);
+                for (SignalAlert signalAlert : signalAlerts)
+                    signalAlertsDs.addItem(signalAlert);
+            } catch (JsonParseException e) {
+                showNotification("Ошибка при получении информации о сигналах", NotificationType.ERROR);
+            }
+        }
+    }
+
+    public void onGoToSignalBtnClick() {
+        try {
+            SignalObject signalRequest = signalsService.getSignalRequest(getItem().getSignalId());
+            openEditor(signalRequest, WindowManager.OpenType.THIS_TAB);
+        } catch (JsonParseException e) {
+            showNotification(e.getMessage(), NotificationType.ERROR);
+        }
+    }
+
+    public void onAddMonitorBtnClick() {
+        showOptionDialog("Внимание!", "Вы уверены: что хотите добавить контрагента на мониторинг? Услуга платная!",
+                MessageType.CONFIRMATION,
+                new Action[]{
+                        new DialogAction(DialogAction.Type.YES)
+                                .withHandler(actionPerformedEvent -> {
+                            Contractor contractor = getItem().getContractor();
+                            SignalObject signalObject = metadata.create(SignalObject.class);
+                            signalObject.setPassport(contractor.getPassport().replaceAll(" ", ""));
+                            signalObject.setPassportDate(contractor.getIssueDate());
+                            signalObject.setDateBorn(contractor.getDateBorn());
+
+                            String[] split = contractor.getName().split(" ");
+                            if (split.length > 0)
+                                signalObject.setLastName(split[0]);
+                            if (split.length > 1)
+                                signalObject.setFirstName(split[1]);
+                            if (split.length > 2)
+                                signalObject.setMiddleName(split[2]);
+                            openEditor(signalObject, WindowManager.OpenType.THIS_TAB, ParamsMap.of("SIGNAL", signalObject))
+                                    .addCloseListener(actionId -> {
+                                        if (signalObject.getRequestId() != null) {
+                                            getItem().setSignalId(signalObject.getRequestId());
+                                            commit();
+                                        }
+                                    });
+                        }),
+                        new DialogAction(DialogAction.Type.NO, true)
+                });
     }
 
     @Override

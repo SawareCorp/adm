@@ -1,25 +1,15 @@
 package com.company.adm.entity;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.validation.constraints.Pattern;
-
 import com.company.adm.entity.contracts.Contractor;
-import com.haulmont.cuba.core.entity.BaseUuidEntity;
-import com.haulmont.cuba.core.entity.Versioned;
-import javax.persistence.Version;
-import com.haulmont.cuba.core.entity.Updatable;
-import java.util.Date;
-import com.haulmont.cuba.core.entity.Creatable;
 import com.haulmont.chile.core.annotations.NamePattern;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import com.haulmont.cuba.core.entity.BaseUuidEntity;
+import com.haulmont.cuba.core.entity.Creatable;
+import com.haulmont.cuba.core.entity.Updatable;
+import com.haulmont.cuba.core.entity.Versioned;
 
-import com.haulmont.cuba.core.entity.annotation.Lookup;
-import com.haulmont.cuba.core.entity.annotation.LookupType;
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 @NamePattern("%s : %s|name,phone")
 @Table(name = "ADM_CONTACT")

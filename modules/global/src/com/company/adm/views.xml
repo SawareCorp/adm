@@ -85,25 +85,17 @@
                       view="bankTicketLine-view">
             </property>
             <property name="suitableBanks"
-                      view="suitableBank-view">
+                      view="_base">
                 <property name="bank"
-                          view="_minimal">
+                          view="_local">
                     <property name="contacts"
                               view="_minimal"/>
                 </property>
-                <property name="documents">
-                    <property name="name"/>
+                <property name="documents"
+                          view="_local">
                 </property>
-                <property name="analytics">
-                    <property name="number"/>
-                    <property name="dateCreation"/>
-                    <property name="contract">
-                        <property name="contractNumber"/>
-                    </property>
-                </property>
-                <property name="state">
-                    <property name="name"/>
-                    <property name="position"/>
+                <property name="state"
+                          view="_minimal">
                 </property>
             </property>
             <property name="contract"
@@ -190,7 +182,7 @@
           name="suitableBank-view"
           systemProperties="true">
         <property name="documents"
-                  view="_minimal"/>
+                  view="_local"/>
         <property name="bank"
                   view="_minimal">
             <property name="address"/>
@@ -292,6 +284,7 @@
         <property name="statusDateTime"/>
         <property name="responsibleManager"
                   view="_minimal"/>
+        <property name="characteristic"/>
     </view>
     <view class="com.company.adm.entity.scheduler.CustomScheduler"
           extends="_local"

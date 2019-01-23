@@ -120,6 +120,8 @@ and e.eventTime is not null]]>
                                 maximumWidth="300"
                                 minimumWidth="120"
                                 property="responsibleManager"/>
+                        <column editable="false"
+                                property="characteristic"/>
                     </columns>
                 </dataGrid>
             </groupBox>

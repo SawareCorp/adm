@@ -45,6 +45,9 @@ public class Contract extends BaseUuidEntity implements Versioned, Updatable, Cr
     @JoinColumn(name = "TICKET_ID")
     protected Ticket ticket;
 
+    @Column(name = "SIGNAL_ID")
+    protected Long signalId;
+
     @NotNull
     @Column(name = "CONTRACT_NUMBER", nullable = false, unique = true)
     protected Long contractNumber;
@@ -134,6 +137,15 @@ public class Contract extends BaseUuidEntity implements Versioned, Updatable, Cr
     @Column(name = "CREATED_BY", length = 50)
     protected String createdBy;
 
+
+
+    public void setSignalId(Long signalId) {
+        this.signalId = signalId;
+    }
+
+    public Long getSignalId() {
+        return signalId;
+    }
 
 
     public void setContractEvent(ContractEvent contractEvent) {

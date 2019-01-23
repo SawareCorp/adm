@@ -49,6 +49,8 @@
                 <column id="face"/>
                 <column id="updateTs"
                         caption="Обновлено"/>
+                <column id="createTs"
+                        caption="msg://createTs"/>
             </columns>
             <rows datasource="ticketsDs"/>
             <rowsCount/>
