@@ -18,7 +18,6 @@ import com.haulmont.cuba.gui.components.Timer;
 public class ExtAppMainWindow extends AbstractMainWindow {
     @Inject
     private FtsField ftsField;
-
     @Inject
     private Embedded logoImage;
 
@@ -51,9 +50,14 @@ public class ExtAppMainWindow extends AbstractMainWindow {
     }
 
     public void onUpdateBalance(Timer source) {
-        double accountBalance = creditReportsService.getAccountBalance();
         SideMenu.MenuItem crrepsMenuItem = sideMenu.getMenuItemNN("application-crreps");
-        String balanceText = String.format("%s руб", accountBalance);
-        crrepsMenuItem.setBadgeText(balanceText);
+        try {
+            double accountBalance = creditReportsService.getAccountBalance();
+            String balanceText = String.format("%s руб", accountBalance);
+            crrepsMenuItem.setBadgeText(balanceText);
+        }catch (Exception e){
+            crrepsMenuItem.setBadgeText("Ошибка!");
+        }
+
     }
 }

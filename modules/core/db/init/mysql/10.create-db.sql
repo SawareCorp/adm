@@ -448,3 +448,16 @@ create table ADM_SMS_TEMPLATE (
     primary key (ID)
 )^
 -- end ADM_SMS_TEMPLATE
+-- begin ADM_CASH_WARRANT
+create table ADM_CASH_WARRANT (
+    ID bigint,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    --
+    AMOUNT bigint not null,
+    CONTRACT_ID varchar(32) not null,
+    AMOUNT_WORDS varchar(255) not null,
+    --
+    primary key (ID)
+)^
+-- end ADM_CASH_WARRANT

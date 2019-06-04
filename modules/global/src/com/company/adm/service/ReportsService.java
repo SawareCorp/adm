@@ -10,4 +10,5 @@ public interface ReportsService {
 
     List<Map<String, Object>> getCurrentLoans(UUID questionnaire);
     List<Map<String, Object>> getSourceOfIncomes(UUID questionnaire);
+    String getAmountWords(Long amount);
 }

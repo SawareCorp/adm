@@ -19,6 +19,8 @@ import com.haulmont.cuba.core.entity.Updatable;
 import com.haulmont.cuba.core.entity.Creatable;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.company.adm.entity.Ticket;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 @NamePattern("%s|comment")
 @Table(name = "ADM_COMMENT")
@@ -38,10 +40,12 @@ public class Comment extends BaseUuidEntity implements Versioned, Updatable, Cre
     @Column(name = "DATE_TIME", nullable = false)
     protected Date dateTime;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT_ID")
     protected Contract contract;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_ID")
     protected Ticket ticket;

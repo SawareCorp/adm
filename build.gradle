@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.9.2'
+    ext.cubaVersion = '6.10.7'
     repositories {
         mavenLocal()
         maven {
@@ -25,7 +25,6 @@ buildscript {
 
 def globalModule = project(':adm-global')
 def coreModule = project(':adm-core')
-def guiModule = project(':adm-gui')
 def webModule = project(':adm-web')
 def webThemesModule = project(':adm-web-themes')
 
@@ -38,8 +37,8 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.company.adm'
-        version = '0.1'
-        isSnapshot = true
+        version = "2.0"
+        isSnapshot = false
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
@@ -51,13 +50,13 @@ dependencies {
     appComponent("com.haulmont.reports:reports-global:$cubaVersion")
     appComponent("com.haulmont.charts:charts-global:$cubaVersion")
     appComponent("com.haulmont.fts:fts-global:$cubaVersion")
-    appComponent("com.company.crreps:crreps-global:1.0")
+    appComponent("com.company.crreps:crreps-global:2.2")
 
 }
 
 def mysql = 'mysql:mysql-connector-java:5.1.38'
 
-configure([globalModule, coreModule, guiModule, webModule]) {
+configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
     apply(plugin: 'idea')
@@ -78,7 +77,9 @@ configure([globalModule, coreModule, guiModule, webModule]) {
 }
 
 configure(globalModule) {
-    task enhance(type: CubaEnhancing)
+    entitiesEnhancing {
+        main { enabled = true }
+    }
 
     
 }
@@ -116,33 +117,20 @@ configure(coreModule) {
 
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
         dbms = 'mysql'
-        host = '10.10.1.50'
+        host = '188.127.237.21'
         dbName = 'adm'
-        dbUser = 'aridg'
+        dbUser = 'adm'
         dbPassword = '20071995'
         connectionParams = '?useSSL=false&allowMultiQueries=true'
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
         dbms = 'mysql'
-        host = '10.10.1.50'
+        host = '188.127.237.21'
         dbName = 'adm'
-        dbUser = 'aridg'
+        dbUser = 'adm'
         dbPassword = '20071995'
         connectionParams = '?useSSL=false&allowMultiQueries=true'
-    }
-}
-
-configure(guiModule) {
-    dependencies {
-        compile(globalModule)
-
-    }
-
-    task deployConf(type: Copy) {
-        from file('src')
-        include "com/company/adm/**"
-        into "$cuba.tomcat.dir/conf/adm"
     }
 }
 
@@ -153,7 +141,7 @@ configure(webModule) {
 
     dependencies {
         provided(servletApi)
-        compile(guiModule)
+        compile(globalModule)
 
     }
     
@@ -191,7 +179,7 @@ configure(webModule) {
 
     task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
         appName = 'adm'
-        appJars('adm-global', 'adm-gui', 'adm-web')
+        appJars('adm-global', 'adm-web')
     }
     task buildScssThemes(type: CubaWebScssThemeCreation)
     task deployThemes(type: CubaDeployThemeTask, dependsOn: buildScssThemes)

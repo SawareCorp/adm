@@ -1,5 +1,6 @@
 package com.company.adm.web.contract;
 
+import com.company.adm.entity.CashWarrant;
 import com.company.adm.entity.Face;
 import com.company.adm.entity.Questionnaire;
 import com.company.adm.entity.Ticket;
@@ -8,8 +9,14 @@ import com.company.adm.entity.contracts.analytics.Analytics;
 import com.company.adm.entity.scheduler.CustomScheduler;
 import com.company.adm.service.AdmConfig;
 import com.company.adm.service.ContractService;
+import com.company.adm.service.ReportsService;
+import com.company.adm.web.cashwarrant.AmountSelector;
 import com.company.crreps.entity.signals.SignalAlert;
+import com.company.crreps.entity.signals.SignalEntityType;
 import com.company.crreps.entity.signals.SignalObject;
+import com.company.crreps.entity.signals.credit.SignalCredit;
+import com.company.crreps.entity.signals.entities.CreditHistoryRequest;
+import com.company.crreps.entity.signals.entities.SignalEntity;
 import com.company.crreps.exceptions.JsonParseException;
 import com.company.crreps.service.SignalsService;
 import com.haulmont.bali.util.ParamsMap;
@@ -20,12 +27,15 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.CreateAction;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.data.GroupDatasource;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.security.entity.User;
 import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.web.gui.components.WebMaskedField;
+import com.haulmont.reports.entity.Report;
+import com.haulmont.reports.gui.ReportGuiManager;
 import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 import com.haulmont.reports.gui.actions.TablePrintFormAction;
 
@@ -136,6 +146,11 @@ public class ContractEdit extends AbstractEditor<Contract> {
     private OrderedContainer monitoringTab;
     @Inject
     private TabSheet tabSheet;
+    private ReportGuiManager reportGuiManager = AppBeans.get(ReportGuiManager.class);
+    @Inject
+    private DataManager dataManager;
+    @Inject
+    private ReportsService reportsService;
     private Ticket sourceTicket;
 
 
@@ -354,10 +369,12 @@ public class ContractEdit extends AbstractEditor<Contract> {
 
         if (contract.getContractor() != null) {
             if (contract.getContractor().getFace() == Face.entity) {
-                tabSheet.getTab("").setVisible(false);
                 monitoringTab.setVisible(false);
             } else getSignalsInfo();
         }
+
+        //Выгрузка сигналов
+        signalAlertsDs.refresh(ParamsMap.of("requestId", getItem().getSignalId()));
     }
 
     @Inject
@@ -610,5 +627,111 @@ public class ContractEdit extends AbstractEditor<Contract> {
         comment.setContract(getItem());
         historyDs.addItem(comment);
         newCommentText.setValue(null);
+    }
+
+    public Component generateCreditAmountCell(SignalAlert entity) {
+        SignalEntityType entityType = entity.getEntityType();
+        SignalEntity body = entity.getEntity();
+
+        if(body == null)
+            return null;
+        else if(entityType == SignalEntityType.inquiry) {
+            CreditHistoryRequest reload = signalAlertsDs.getDataSupplier().reload((CreditHistoryRequest) body, View.LOCAL);
+            return new Table.PlainTextCell(reload.getAmount().toString());
+        }
+        else if(entityType == SignalEntityType.credit) {
+            SignalCredit reload = signalAlertsDs.getDataSupplier().reload((SignalCredit) body, View.LOCAL);
+            return new Table.PlainTextCell(reload.getCreditLimit().toString());
+        }
+        else return null;
+    }
+
+    public Component generateStatusTargetCell(SignalAlert entity) {
+        SignalEntityType entityType = entity.getEntityType();
+        SignalEntity body = entity.getEntity();
+
+        if(body == null)
+            return null;
+        else if(entityType == SignalEntityType.inquiry) {
+            CreditHistoryRequest reload = signalAlertsDs.getDataSupplier().reload((CreditHistoryRequest) body, View.LOCAL);
+            return new Table.PlainTextCell(messages.getMessage(reload.getPurpose()));
+        }
+        else if(entityType == SignalEntityType.credit) {
+            SignalCredit reload = signalAlertsDs.getDataSupplier().reload((SignalCredit) body, View.LOCAL);
+            if(reload.getStatus() == null)
+                return new Table.PlainTextCell("");
+            else return new Table.PlainTextCell(messages.getMessage(reload.getStatus()));
+        }
+        else return null;
+    }
+
+    public Component generateOpenDateCell(SignalAlert entity) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SignalEntityType entityType = entity.getEntityType();
+        SignalEntity body = entity.getEntity();
+
+        if(body == null)
+            return null;
+        else if(entityType == SignalEntityType.credit) {
+            SignalCredit reload = signalAlertsDs.getDataSupplier().reload((SignalCredit) body, View.LOCAL);
+            return new Table.PlainTextCell(format.format(reload.getOpen()));
+        }
+        else return null;
+    }
+
+    public Component generateCloseDateCell(SignalAlert entity) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SignalEntityType entityType = entity.getEntityType();
+        SignalEntity body = entity.getEntity();
+
+        if(body == null)
+            return null;
+        else if(entityType == SignalEntityType.credit) {
+            SignalCredit reload = signalAlertsDs.getDataSupplier().reload((SignalCredit) body, View.LOCAL);
+            return new Table.PlainTextCell(format.format(reload.getClosePlan()));
+        }
+        else return null;
+    }
+
+    public void onPrintCashWarrantClick() {
+        AmountSelector amountSelector = (AmountSelector) openWindow("amount-selector", WindowManager.OpenType.DIALOG);
+        amountSelector.addCloseWithCommitListener(() -> {
+            Long amount = amountSelector.getAmount();
+            CashWarrant cashWarrant = metadata.create(CashWarrant.class);
+            Long maxId = dataManager.loadValue("select max(cw.id) from adm$CashWarrant cw", Long.class)
+                    .one();
+            if(maxId == null)
+                maxId = 0L;
+            cashWarrant.setId(++maxId);
+            cashWarrant.setAmount(amount);
+            cashWarrant.setContract(getItem());
+            cashWarrant.setAmountWords(reportsService.getAmountWords(amount));
+            cashWarrantsDs.addItem(cashWarrant);
+            cashWarrantsDs.commit();
+
+            LoadContext<Report> lContext = new LoadContext<>(Report.class);
+            lContext.setQueryString("select r from report$Report r where r.code = 'CASH_WARRANT' ");
+
+            Report report = dataManager.load(lContext);
+            reportGuiManager.printReport(report, ParamsMap.of("entity", cashWarrant));
+            
+        });
+    }
+
+    @Inject
+    private GroupTable<CashWarrant> cashWarrantsTable;
+    @Inject
+    private GroupDatasource<CashWarrant, Long> cashWarrantsDs;
+
+    public void onPrint(Component source) {
+        CashWarrant warrant = cashWarrantsTable.getSingleSelected();
+        if(warrant == null)
+            return;
+        LoadContext<Report> lContext = new LoadContext<>(Report.class);
+        lContext.setQueryString("select r from report$Report r where r.code = 'CASH_WARRANT' ");
+
+        Report report = dataManager.load(lContext);
+        reportGuiManager.printReport(report, ParamsMap.of("entity", warrant));
+        cashWarrantsDs.refresh();
     }
 }

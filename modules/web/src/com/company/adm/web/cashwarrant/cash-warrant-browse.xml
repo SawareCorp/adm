@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.adm.web.cashwarrant.CashWarrantBrowse"
+        focusComponent="cashWarrantsTable"
+        lookupComponent="cashWarrantsTable"
+        messagesPack="com.company.adm.web.cashwarrant">
+    <dsContext>
+        <groupDatasource id="cashWarrantsDs"
+                         class="com.company.adm.entity.CashWarrant"
+                         view="cashWarrant-view">
+            <query>
+                <![CDATA[select e from adm$CashWarrant e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <layout expand="cashWarrantsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="cashWarrantsTable"
+                datasource="cashWarrantsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="cashWarrantsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="amount"/>
+                <column id="contract"/>
+            </columns>
+            <rows datasource="cashWarrantsDs"/>
+            <rowsCount/>
+        </groupTable>
+    </layout>
+</window>

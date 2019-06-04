@@ -1,0 +1,1 @@
+alter table ADM_CONTRACT_SERVICE_LINE add constraint FK_ADM_CONTRACT_SERVICE_LINE_ON_CONTRACT foreign key (CONTRACT_ID) references ADM_CONTRACT(ID) on delete CASCADE;

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
-    <item insertBefore="reports"
+    <item insertBefore="application-crreps"
           screen="Scheduler"/>
-    <item insertBefore="reports"
-          screen="adm$Ticket.browse"/>
-    <item insertBefore="reports"
+    <item insertBefore="application-crreps"
           screen="adm$Contract.browse"/>
-    <item insertBefore="reports"
+    <item insertBefore="application-crreps"
+          screen="adm$Ticket.browse"/>
+    <item insertBefore="application-crreps"
           screen="adm$Contractor.browse"/>
-    <item insertBefore="reports"
+    <item insertBefore="application-crreps"
           screen="adm$SuitableBank.browse"/>
     <menu id="application-adm"
-          insertBefore="reports">
+          insertBefore="application-crreps">
         <item screen="adm$Bank.browse"/>
         <item screen="adm$Document.browse"/>
         <item screen="adm$Interest.browse"/>
@@ -22,5 +22,6 @@
         <item screen="adm$ServiceStatus.browse"/>
         <item screen="adm$Service.browse"/>
         <item screen="adm$SmsTemplate.browse"/>
+        <item screen="adm$CashWarrant.browse"/>
     </menu>
 </menu-config>

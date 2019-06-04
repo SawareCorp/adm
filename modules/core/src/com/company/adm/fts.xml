@@ -67,5 +67,8 @@
         <entity class="com.company.adm.entity.SmsTemplate">
             <include re=".*"/>
         </entity>
+        <entity class="com.company.adm.entity.CashWarrant">
+            <include re=".*"/>
+        </entity>
     </entities>
 </fts-config>

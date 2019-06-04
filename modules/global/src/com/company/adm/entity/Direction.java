@@ -9,7 +9,8 @@ public enum Direction implements EnumClass<String> {
 
     Juridical("1"),
     Bookkeeping("2"),
-    Lending("3");
+    Lending("3"),
+    InsuranceReturn("4");
 
     private String id;
 

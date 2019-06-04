@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.adm.web.cashwarrant.AmountSelector"
+        messagesPack="com.company.adm.web.cashwarrant">
+    <layout expand="buttonsPanel"
+            spacing="true">
+        <textField id="amountField"
+                   caption="Введите сумму"
+                   datatype="long"
+                   required="true"
+                   width="100%"/>
+        <buttonsPanel id="buttonsPanel">
+            <button id="okBtn"
+                    caption="ОК"
+                    invoke="onOkBtnClick"/>
+            <button id="cancelBtn"
+                    caption="Отмена"
+                    invoke="onCancelBtnClick"/>
+        </buttonsPanel>
+    </layout>
+</window>

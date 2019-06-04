@@ -45,6 +45,7 @@ public class Ticket extends BaseUuidEntity implements Versioned, Updatable, Crea
     @Column(name = "PHONE", nullable = false, length = 20)
     protected String phone;
 
+    @OnDeleteInverse(DeletePolicy.UNLINK)
     @Composition
     @OneToMany(mappedBy = "ticket")
     protected List<Contact> contacts;
@@ -100,6 +101,7 @@ public class Ticket extends BaseUuidEntity implements Versioned, Updatable, Crea
     @Column(name = "E_MAIL")
     protected String eMail;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @Composition
     @OrderBy("dateTime")
     @OneToMany(mappedBy = "ticket")
@@ -110,6 +112,7 @@ public class Ticket extends BaseUuidEntity implements Versioned, Updatable, Crea
     @JoinColumn(name = "QUESTIONNAIRE_ID")
     protected Questionnaire questionnaire;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @Composition
     @OneToMany(mappedBy = "ticket")
     protected List<CustomScheduler> customScheduler;

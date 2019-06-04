@@ -7,8 +7,8 @@
               name="jdbc/CubaDS"
               password="20071995"
               type="javax.sql.DataSource"
-              url="jdbc:mysql://10.10.1.50/adm?useSSL=false&amp;allowMultiQueries=true"
-              username="aridg"/>
+              url="jdbc:mysql://188.127.237.21/adm?useSSL=false&amp;allowMultiQueries=true"
+              username="adm"/>
     <!-- Switch off session serialization -->
     <Manager pathname=""/>
     <!--<Resource driverClassName="org.hsqldb.jdbc.JDBCDriver"

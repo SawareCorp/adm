@@ -359,4 +359,11 @@
         <property name="amount"/>
         <property name="createDate"/>
     </view>
+    <view class="com.company.adm.entity.CashWarrant"
+          extends="_local"
+          name="cashWarrant-view"
+          systemProperties="true">
+        <property name="contract"
+                  view="_minimal"/>
+    </view>
 </views>

@@ -37,7 +37,8 @@
                               class="com.haulmont.cuba.security.entity.User"
                               view="_minimal">
             <query>
-                <![CDATA[select e from sec$User e]]>
+                <![CDATA[select e from sec$User e where e.active = true 
+and e.login not in ('admin', 'anonymous')]]>
             </query>
         </collectionDatasource>
         <collectionDatasource id="banksDs"
@@ -219,6 +220,8 @@
                             <columns>
                                 <column id="bank"/>
                                 <column id="applicationDate"/>
+                                <column id="comment"
+                                        maxTextLength="100"/>
                             </columns>
                             <rows datasource="bankTicketsDs"/>
                             <buttonsPanel>

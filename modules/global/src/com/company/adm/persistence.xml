@@ -25,5 +25,6 @@
         <class>com.company.adm.entity.TicketState</class>
         <class>com.company.adm.entity.contracts.analytics.SuitableBankState</class>
         <class>com.company.adm.entity.SmsTemplate</class>
+        <class>com.company.adm.entity.CashWarrant</class>
     </persistence-unit>
 </persistence>

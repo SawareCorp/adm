@@ -72,6 +72,7 @@ public class Contract extends BaseUuidEntity implements Versioned, Updatable, Cr
     @Column(name = "DESIRED_AMOUNT")
     protected String desiredAmount;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @Composition
     @OneToMany(mappedBy = "contract")
     protected List<ContractServiceLine> services;
@@ -86,11 +87,13 @@ public class Contract extends BaseUuidEntity implements Versioned, Updatable, Cr
     @JoinColumn(name = "RESPONSIBLE_MANAGER_ID")
     protected User responsibleManager;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @Composition
     @OrderBy("dateTime desc")
     @OneToMany(mappedBy = "contract")
     protected List<Comment> history;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @OrderBy("number")
     @Composition
     @OneToMany(mappedBy = "contract")
@@ -101,6 +104,7 @@ public class Contract extends BaseUuidEntity implements Versioned, Updatable, Cr
     @JoinColumn(name = "QUESTIONNAIRE_ID")
     protected Questionnaire questionnaire;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinTable(name = "ADM_CONTRACT_FILE_DESCRIPTOR_LINK",
         joinColumns = @JoinColumn(name = "CONTRACT_ID"),
         inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
@@ -111,6 +115,7 @@ public class Contract extends BaseUuidEntity implements Versioned, Updatable, Cr
     @JoinColumn(name = "SOURCE_ID")
     protected SourceDescription source;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "contract")
     protected List<CustomScheduler> schedules;
 

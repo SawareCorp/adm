@@ -31,6 +31,8 @@ import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.cuba.core.global.AppBeans;
 
 import javax.validation.constraints.Pattern;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 @Listeners("adm_ContractServiceLineEntityListener")
 @NamePattern("%s|service")
@@ -53,6 +55,7 @@ public class ContractServiceLine extends BaseUuidEntity implements Versioned, Up
     @JoinColumn(name = "STATE_ID")
     protected ServiceStatus state;
 
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT_ID")
     protected Contract contract;

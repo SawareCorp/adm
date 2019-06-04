@@ -1,7 +1,6 @@
 rootProject.name = 'adm'
-include(':adm-global', ':adm-core', ':adm-gui', ':adm-web', ':adm-web-themes')
+include(':adm-global', ':adm-core', ':adm-web', ':adm-web-themes')
 project(':adm-global').projectDir = new File(settingsDir, 'modules/global')
 project(':adm-core').projectDir = new File(settingsDir, 'modules/core')
-project(':adm-gui').projectDir = new File(settingsDir, 'modules/gui')
 project(':adm-web').projectDir = new File(settingsDir, 'modules/web')
 project(':adm-web-themes').projectDir = new File(settingsDir, 'modules/web/themes')

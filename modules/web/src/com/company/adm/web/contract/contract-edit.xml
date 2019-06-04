@@ -63,7 +63,7 @@ order by e.serialNumber]]>
                               class="com.haulmont.cuba.security.entity.User"
                               view="_minimal">
             <query>
-                <![CDATA[select e from sec$User e]]>
+                <![CDATA[select e from sec$User e where e.active = true and e.login not in ('admin', 'anonymous')]]>
             </query>
         </collectionDatasource>
         <collectionDatasource id="sourcesDs"
@@ -76,7 +76,18 @@ order by e.serialNumber]]>
         <collectionDatasource id="signalAlertsDs"
                               allowCommit="false"
                               class="com.company.crreps.entity.signals.SignalAlert"
-                              refreshMode="NEVER"/>
+                              view="signalAlert-view">
+            <query>
+                <![CDATA[select e from crreps$SignalAlert e where e.subject = :custom$requestId]]>
+            </query>
+        </collectionDatasource>
+        <groupDatasource id="cashWarrantsDs"
+                         class="com.company.adm.entity.CashWarrant"
+                         view="cashWarrant-view">
+            <query>
+                <![CDATA[select e from adm$CashWarrant e where e.contract.id = :ds$contractDs.id]]>
+            </query>
+        </groupDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -304,6 +315,8 @@ order by e.serialNumber]]>
                             <columns>
                                 <column id="bank"/>
                                 <column id="applicationDate"/>
+                                <column id="comment"
+                                        maxTextLength="100"/>
                             </columns>
                             <rows datasource="bankTicketsDs"/>
                             <buttonsPanel>
@@ -405,7 +418,10 @@ order by e.serialNumber]]>
                  caption="msg://monitoring"
                  margin="true,false,false,false"
                  spacing="true">
-                <vbox spacing="true">
+                <vbox id="monitoringVbox"
+                      expand="signalAlertsTableGBox"
+                      height="100%"
+                      spacing="true">
                     <buttonsPanel>
                         <button id="goToSignalBtn"
                                 caption="msg://goToSignal"
@@ -427,12 +443,56 @@ order by e.serialNumber]]>
                             </actions>
                             <columns>
                                 <column id="shortDescription"/>
-                                <column id="dateTime"/>
+                                <column id="dateTime">
+                                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                                               format="dd-MM-yyyy"/>
+                                </column>
+                                <column id="creditAmount"
+                                        caption="msg://creditAmount"
+                                        generator="generateCreditAmountCell"/>
+                                <column id="statusTarget"
+                                        caption="msg://statusTarget"
+                                        generator="generateStatusTargetCell"/>
+                                <column id="openDate"
+                                        caption="msg://openDate"
+                                        generator="generateOpenDateCell"/>
+                                <column id="closeDate"
+                                        caption="msg://closeDate"
+                                        generator="generateCloseDateCell"/>
                             </columns>
                             <rows datasource="signalAlertsDs"/>
                         </table>
                     </groupBox>
                 </vbox>
+            </tab>
+            <tab id="cashWarrantsTab"
+                 caption="msg://payments"
+                 margin="true,false,false,false"
+                 spacing="true">
+                <groupTable id="cashWarrantsTable"
+                            height="100%"
+                            width="100%">
+                    <actions>
+                        <action id="print"
+                                caption="msg://print"
+                                icon="PRINT"
+                                invoke="onPrint"
+                                trackSelection="true"/>
+                    </actions>
+                    <columns>
+                        <column id="id"
+                                caption="№"/>
+                        <column id="createTs"
+                                caption="Создано"/>
+                        <column id="createdBy"
+                                caption="Создатель"/>
+                        <column id="amount"/>
+                    </columns>
+                    <rows datasource="cashWarrantsDs"/>
+                    <buttonsPanel>
+                        <button action="cashWarrantsTable.print"/>
+                    </buttonsPanel>
+                </groupTable>
             </tab>
         </tabSheet>
         <hbox spacing="true">
@@ -445,6 +505,10 @@ order by e.serialNumber]]>
                     caption="msg://schedulerButton"
                     icon="font-icon:CALENDAR"
                     invoke="onSchedulerButtonClick"/>
+            <button id="printCashWarrant"
+                    caption="Новый кассовый ордер"
+                    icon="MONEY"
+                    invoke="onPrintCashWarrantClick"/>
         </hbox>
     </layout>
 </window>
