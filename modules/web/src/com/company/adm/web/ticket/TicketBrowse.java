@@ -3,22 +3,15 @@ package com.company.adm.web.ticket;
 import com.company.adm.entity.Ticket;
 import com.company.adm.service.TicketService;
 import com.haulmont.cuba.gui.WindowManager;
-import com.haulmont.cuba.gui.components.AbstractLookup;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.FileUploadField;
-import com.haulmont.cuba.gui.components.GroupTable;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.GroupDatasource;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.reports.gui.actions.TablePrintFormAction;
 
 import javax.inject.Inject;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.text.ParseException;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TicketBrowse extends AbstractLookup {
     @Inject
@@ -33,6 +26,8 @@ public class TicketBrowse extends AbstractLookup {
     private GroupDatasource<Ticket, UUID> ticketsDs;
     @Inject
     private Button reportsButton;
+    @Inject
+    private CheckBox showClosedCheckBox;
     @Inject
     private TicketService ticketService;
 
@@ -81,5 +76,16 @@ public class TicketBrowse extends AbstractLookup {
         TablePrintFormAction action = new TablePrintFormAction("report", ticketsTable);
         ticketsTable.addAction(action);
         reportsButton.setAction(action);
+
+        showClosedCheckBox.setValue(true);
+        showClosedCheckBox.addValueChangeListener(e -> {
+            if (e.getValue() == null)
+                return;
+            if ((Boolean) e.getValue())
+                ticketsDs.setQuery("select e from adm$Ticket e order by e.createTs desc");
+            else ticketsDs.setQuery("select e from adm$Ticket e where e.status.closed = false order by e.createTs desc");
+            ticketsDs.refresh();
+        });
+
     }
 }

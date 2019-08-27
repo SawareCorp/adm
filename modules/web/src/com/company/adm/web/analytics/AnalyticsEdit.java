@@ -1,10 +1,15 @@
 package com.company.adm.web.analytics;
 
+import com.company.adm.entity.CurrentLoan;
+import com.company.adm.entity.Questionnaire;
 import com.company.adm.entity.contracts.Contract;
 import com.company.adm.entity.contracts.analytics.BankTicketLine;
 import com.company.adm.entity.contracts.analytics.SuitableBank;
 import com.company.adm.service.ContractService;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.UuidSource;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 import com.company.adm.entity.contracts.analytics.Analytics;
@@ -76,6 +81,11 @@ public class AnalyticsEdit extends AbstractEditor<Analytics> {
             getItem().setNumber(number);
             getItem().setDateCreation(new Date());
         }
+
+        if((getItem().getCurrentLoans() != null && getItem().getCurrentLoans().size() > 0) || (getItem().getTicketToBanks() != null && getItem().getTicketToBanks().size() > 0)){
+            importFromQuestionnair.setEnabled(false);
+            importFromQuestionnair2.setEnabled(false);
+        }
     }
 
     private void checkMandatoryFields(){
@@ -109,5 +119,49 @@ public class AnalyticsEdit extends AbstractEditor<Analytics> {
                 nextNumber = existsAnalytic.getNumber();
         }
         return nextNumber + 1;
+    }
+
+    @Inject
+    private DataManager dataManager;
+    @Inject
+    private Metadata metadata;
+
+    @Inject
+    private CollectionDatasource<CurrentLoan, UUID> analyticsCurrentLoansDs;
+    @Inject
+    private CollectionDatasource<BankTicketLine, UUID> ticketToBanksDs;
+    @Inject
+    private Button importFromQuestionnair;
+    @Inject
+    private Button importFromQuestionnair2;
+    @Inject
+    private UuidSource uuidSource;
+
+    public void onImportFromQuestionnairClick() {
+        Questionnaire questionnaire = getItem().getContract().getQuestionnaire();
+        questionnaire = dataManager.reload(questionnaire, "questionnaire-view");
+
+        Set<BankTicketLine> questionnaireBankTickets = questionnaire.getBankTickets();
+        Set<CurrentLoan> questionnaireCurrentLoans = questionnaire.getCurrentLoans();
+
+        for (BankTicketLine bankTicket : questionnaireBankTickets) {
+            BankTicketLine deepCopy = metadata.getTools().deepCopy(bankTicket);
+            deepCopy.setId(uuidSource.createUuid());
+            deepCopy.setQuestionnaire(null);
+            deepCopy.setAnalytics(getItem());
+            ticketToBanksDs.addItem(deepCopy);
+        }
+
+        for (CurrentLoan currentLoan : questionnaireCurrentLoans) {
+            CurrentLoan deepCopy = metadata.getTools().deepCopy(currentLoan);
+            deepCopy.setId(uuidSource.createUuid());
+            deepCopy.setQuestionnaire(null);
+            deepCopy.setAnalytics(getItem());
+            analyticsCurrentLoansDs.addItem(deepCopy);
+        }
+
+        importFromQuestionnair.setEnabled(false);
+        importFromQuestionnair2.setEnabled(false);
+
     }
 }

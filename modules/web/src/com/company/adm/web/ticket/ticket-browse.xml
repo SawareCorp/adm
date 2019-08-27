@@ -10,7 +10,8 @@
                          class="com.company.adm.entity.Ticket"
                          view="ticketOptBrowser-view">
             <query>
-                <![CDATA[select e from adm$Ticket e order by e.createTs desc]]>
+                <![CDATA[select e from adm$Ticket e 
+order by e.createTs desc]]>
             </query>
         </groupDatasource>
     </dsContext>
@@ -77,6 +78,9 @@
                         permittedExtensions=".csv"
                         uploadButtonCaption="msg://importJuridicalButton"
                         uploadButtonIcon="font-icon:UPLOAD"/>
+                <checkBox id="showClosedCheckBox"
+                          align="MIDDLE_CENTER"
+                          caption="msg://showClosed"/>
             </buttonsPanel>
         </groupTable>
     </layout>

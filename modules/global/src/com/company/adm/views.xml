@@ -173,6 +173,8 @@
         <property name="contract"
                   view="_minimal">
             <property name="createDate"/>
+            <property name="questionnaire"
+                      view="_minimal"/>
         </property>
         <property name="currentLoans"
                   view="_local"/>
@@ -321,7 +323,9 @@
         <property name="sourceDescription"
                   view="_minimal"/>
         <property name="status"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="closed"/>
+        </property>
         <property name="statusDateTime"/>
         <property name="lastCall"/>
         <property name="lastMeeting"/>

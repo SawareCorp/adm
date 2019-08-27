@@ -110,7 +110,7 @@ and e.login not in ('admin', 'anonymous')]]>
                         <fieldGroup id="fieldGroup2"
                                     datasource="ticketDs">
                             <column width="310px">
-                                <field mask="#(###)###-##-##"
+                                <field mask="###########"
                                        property="phone"
                                        valueMode="clear"/>
                                 <field property="eMail"/>

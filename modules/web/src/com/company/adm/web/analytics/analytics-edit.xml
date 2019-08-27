@@ -92,6 +92,10 @@
                                 action="ticketToBanksTable.create"/>
                         <button action="ticketToBanksTable.edit"/>
                         <button action="ticketToBanksTable.remove"/>
+                        <button id="importFromQuestionnair"
+                                caption="msg://importFromQuestionnair"
+                                icon="icons/wf-exchange.png"
+                                invoke="onImportFromQuestionnairClick"/>
                     </buttonsPanel>
                 </table>
             </groupBox>
@@ -119,6 +123,10 @@
                         <button action="currentLoansTable.create"/>
                         <button action="currentLoansTable.edit"/>
                         <button action="currentLoansTable.remove"/>
+                        <button id="importFromQuestionnair2"
+                                caption="msg://importFromQuestionnair"
+                                icon="icons/wf-exchange.png"
+                                invoke="onImportFromQuestionnairClick"/>
                     </buttonsPanel>
                 </table>
             </groupBox>

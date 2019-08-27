@@ -12,7 +12,8 @@ public enum ContractStatus implements EnumClass<Integer> {
     Closed(3),
     Paid(4),
     NotPaid(5),
-    On_recovery(6);
+    On_recovery(6),
+    Illiquid(7);
 
     private Integer id;
 
